@@ -1,3 +1,33 @@
-[gd_scene format=3 uid="uid://bguf24stjbn58"]
+[gd_scene load_steps=5 format=3 uid="uid://bguf24stjbn58"]
+
+[ext_resource type="Shader" path="res://slimulation_poc.gdshader" id="1_6xlbj"]
+[ext_resource type="Script" path="res://slimulation.gd" id="2_pos2g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p6efu"]
+shader = ExtResource("1_6xlbj")
+shader_parameter/actor_coordinates = null
+shader_parameter/number_of_actors = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kik3a"]
+shader = ExtResource("1_6xlbj")
+shader_parameter/actor_coordinates = null
+shader_parameter/number_of_actors = null
 
 [node name="Slimulation" type="Node2D"]
+material = SubResource("ShaderMaterial_p6efu")
+script = ExtResource("2_pos2g")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ShaderBox" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_kik3a")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
