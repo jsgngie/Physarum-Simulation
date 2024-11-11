@@ -20,8 +20,8 @@ void fragment() {
 
     // Set the color based on whether a match was found
     if (is_colored) {
-        COLOR = vec4(1.0, 0.0, 0.0, 1.0); // Color the pixel red if it matches
+        COLOR = vec4(UV.x, UV.y, UV.x, 0.5);
     } else {
-        COLOR = vec4(1.0, 1.0, 1.0, 1.0); // Default color (white)
+        COLOR = vec4(0.1, 0.1, 0.1, 1.0);
     }
 }
