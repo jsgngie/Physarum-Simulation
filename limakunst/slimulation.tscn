@@ -1,3 +1,41 @@
-[gd_scene format=3 uid="uid://bguf24stjbn58"]
+[gd_scene load_steps=5 format=3 uid="uid://bguf24stjbn58"]
+
+[ext_resource type="Script" path="res://slimeTest.gd" id="1_1xsu0"]
+[ext_resource type="Shader" path="res://SlimeTest.gdshader" id="2_86d5v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fqtlp"]
+shader = ExtResource("2_86d5v")
+shader_parameter/darkColor = Color(0, 0, 0, 1)
+shader_parameter/lightColor = Color(1.82897e-06, 0.736734, 0.586352, 1)
+shader_parameter/dissapation = 0.005
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jt6w1"]
+width = 1152
+height = 648
 
 [node name="Slimulation" type="Node2D"]
+script = ExtResource("1_1xsu0")
+radius = 2
+simulate = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_clear_mode = 1
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport"]
+material = SubResource("ShaderMaterial_fqtlp")
+offset_right = 20.0
+offset_bottom = 1.0
+texture = SubResource("NoiseTexture2D_jt6w1")
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+visible = false
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
