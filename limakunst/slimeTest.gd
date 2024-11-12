@@ -3,7 +3,8 @@ extends Node2D
 @export var width : int = 320
 @export var height : int = 180
 @export var actorSpeed = 0.8
-@export var numActors : int = 250
+@export var numActors : int = 100
+@export var number_of_groups = 1
 @export var sensorDist : float = 6
 @export var sensorAngle : float = 0.7
 @export var turnSpeed = 0.3
@@ -22,6 +23,7 @@ var mat
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	numActors = Global.number_of_actors_in_groups
 	mat = $SubViewportContainer/SubViewport/TextureRect.material
 	for y in range(height * width):
 			emptyData.append(0.0)
@@ -39,7 +41,8 @@ func _ready() -> void:
 			"pos" : pos,
 			"dir" : dir
 		})
-	
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	viewPortTex = $SubViewportContainer/SubViewport.get_texture()
@@ -71,6 +74,8 @@ func _process(delta: float) -> void:
 	tex = ImageTexture.create_from_image(img)
 	mat.set_shader_parameter("dataTex", tex)
 	#$SubViewportContainer/SubViewport/TextureRect.texture = tex
+	
+	
 func updateActorDir(pos, dir, data):
 
 	var forwardSensor = pos + (Vector2(sensorDist, 0)).rotated(dir.angle())

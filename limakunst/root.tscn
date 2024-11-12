@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwsyrpaplsydf"]
+[gd_scene load_steps=9 format=3 uid="uid://bwsyrpaplsydf"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_loohh"]
 [ext_resource type="FontFile" uid="uid://06a4wcx3tevo" path="res://assets/fonts/Lexend/static/Lexend-Light.ttf" id="2_rgibt"]
@@ -11,6 +11,11 @@ font_size = 50
 font = ExtResource("2_rgibt")
 font_size = 19
 font_color = Color(0.860369, 0.860369, 0.860369, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_d0yvq"]
+font = ExtResource("2_rgibt")
+font_size = 19
+font_color = Color(0.389287, 0.389287, 0.389286, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss8c8"]
 bg_color = Color(0.105588, 0.113471, 0.11011, 1)
@@ -131,7 +136,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "Number of Groups
 "
-label_settings = SubResource("LabelSettings_okq3w")
+label_settings = SubResource("LabelSettings_d0yvq")
 horizontal_alignment = 1
 
 [node name="SliderLabelsDisplayed" type="VBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders"]
@@ -143,7 +148,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "0"
+text = "100"
 label_settings = SubResource("LabelSettings_okq3w")
 horizontal_alignment = 1
 
@@ -151,8 +156,8 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "0"
-label_settings = SubResource("LabelSettings_okq3w")
+text = "1"
+label_settings = SubResource("LabelSettings_d0yvq")
 horizontal_alignment = 1
 
 [node name="SliderContainer" type="VBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders"]
@@ -163,10 +168,17 @@ theme_override_constants/separation = 35
 [node name="SliderActorsInGroups" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
 layout_mode = 2
 size_flags_vertical = 1
+min_value = 100.0
+max_value = 1000.0
+value = 100.0
 
 [node name="SliderGroups" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
 layout_mode = 2
 size_flags_vertical = 1
+min_value = 1.0
+max_value = 4.0
+value = 1.0
+editable = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
