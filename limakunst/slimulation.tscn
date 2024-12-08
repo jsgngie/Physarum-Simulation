@@ -1,13 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://bguf24stjbn58"]
+[gd_scene load_steps=7 format=3 uid="uid://bguf24stjbn58"]
 
 [ext_resource type="Script" path="res://slimeTest.gd" id="1_1xsu0"]
 [ext_resource type="Shader" path="res://SlimeTest.gdshader" id="2_86d5v"]
+
+[sub_resource type="Gradient" id="Gradient_3f2qx"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yb5a2"]
+gradient = SubResource("Gradient_3f2qx")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fqtlp"]
 shader = ExtResource("2_86d5v")
 shader_parameter/darkColor = Color(0, 0, 0, 1)
 shader_parameter/lightColor = Color(1.82897e-06, 0.736734, 0.586352, 1)
 shader_parameter/dissapation = 0.005
+shader_parameter/dataTex = SubResource("GradientTexture2D_yb5a2")
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jt6w1"]
 width = 1152
