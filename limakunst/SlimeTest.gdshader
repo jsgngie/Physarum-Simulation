@@ -7,15 +7,18 @@ uniform float dissapation = 0.01;
 
 
 void fragment() {
-	vec2 uv = SCREEN_UV;
+	vec2 uv = UV;
 	vec3 col = vec3(texture(dataTex, uv).r);
 	vec3 oldCol = vec3(texture(screenTex, uv).r);
 	vec3 avg = vec3(0.0);
-	for (int i = -1; i <= 1; i++) {
+
+		for (int i = -1; i <= 1; i++) {
 		for (int j = -1; j <= 1; j++) {
 			avg += texture(screenTex, uv + vec2(0.001*float(i), 0.001*float(j))).rgb;
 		}
 	}
+	
+	
 	oldCol = avg / 9.0;
 	
 	col = max(col, oldCol);

@@ -23,7 +23,7 @@ var mat
 
 var rd : RenderingDevice
 var shader : RID
-var work_group_size : int = 64
+var work_group_size : int = 256
 
 var actorsXBuffer : RID
 var actorsYBuffer : RID
@@ -54,8 +54,10 @@ func _ready() -> void:
 		var idY = randi_range(0, 1)
 		randomize()
 		
-		
-		var pos = Vector2(randf_range(width/2 - radius, width/2 + radius), randf_range(height/2 - radius, height/2 + radius))
+		var angle = randf_range(-2*PI, 2*PI)
+		#var pos = Vector2(randf_range(width/2 - radius, width/2 + radius), randf_range(height/2 - radius, height/2 + radius))
+		var pos = Vector2(width/2 + radius * cos(angle) * randf(), height/2 + radius * sin(angle) * randf())
+		rot = (Vector2(width/2, height/2) - pos).angle()
 		actorsX.append(pos.x)
 		actorsY.append(pos.y)
 		actorsRot.append(rot)
@@ -128,7 +130,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	viewPortTex = $SubViewportContainer/SubViewport.get_texture()
 	viewPortImg = viewPortTex.get_image()
-	viewPortImg.resize(width, height, 0)
+	#viewPortImg.resize(width, height, 0)
 	viewPortImg.convert(Image.FORMAT_RF)
 	
 	_process_compute()
@@ -165,6 +167,7 @@ func _updateBuffers():
 	fmt.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 	fmt.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
+	rd.free_rid(trailMapBuffer)
 	trailMapBuffer = rd.texture_create(fmt, view, [viewPortImg.get_data()])
 	var trailMapUniform := RDUniform.new()
 	trailMapUniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
@@ -172,6 +175,7 @@ func _updateBuffers():
 	trailMapUniform.add_id(trailMapBuffer)
 	
 	var tempImg := Image.create_empty(width, height, false, Image.FORMAT_RF)
+	rd.free_rid(trailMapOutBuffer)
 	trailMapOutBuffer = rd.texture_create(fmt, view, [tempImg.get_data()])
 	var trailMapOutUniform := RDUniform.new()
 	trailMapOutUniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
