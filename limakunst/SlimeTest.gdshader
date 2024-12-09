@@ -4,6 +4,7 @@ uniform vec3 darkColor : source_color;
 uniform vec3 lightColor : source_color;
 uniform sampler2D dataTex;
 uniform float dissapation = 0.01;
+uniform float maxBrightness = 0.75;
 
 
 void fragment() {
@@ -14,17 +15,23 @@ void fragment() {
 
 		for (int i = -1; i <= 1; i++) {
 		for (int j = -1; j <= 1; j++) {
-			avg += texture(screenTex, uv + vec2(0.001*float(i), 0.001*float(j))).rgb;
+			if (j == 0 && i == 0) {
+				avg += col;
+				continue;
+			}
+			vec3 temp = vec3(0.0);
+			temp += texture(screenTex, uv + vec2(0.001*float(i), 0.001*float(j))).rgb;
+			temp += texture(dataTex, uv + vec2(0.001*float(i), 0.001*float(j))).rgb;
+			avg += min(temp, vec3(1.0));
 		}
 	}
 	
 	
-	oldCol = avg / 9.0;
-	
-	col = max(col, oldCol);
+	avg = avg / 9.0;
+	col = max(avg, oldCol);
 	
 	col = mix(col, vec3(0.0), dissapation);
-	
+	//col = max(col - dissapation, 0.0);
 	COLOR.rgb = col;
 }
 

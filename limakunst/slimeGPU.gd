@@ -57,6 +57,7 @@ func _ready() -> void:
 		var angle = randf_range(-2*PI, 2*PI)
 		#var pos = Vector2(randf_range(width/2 - radius, width/2 + radius), randf_range(height/2 - radius, height/2 + radius))
 		var pos = Vector2(width/2 + radius * cos(angle) * randf(), height/2 + radius * sin(angle) * randf())
+		#var pos = Vector2(randf_range(0.0, width), randf_range(0.0, height))
 		rot = (Vector2(width/2, height/2) - pos).angle()
 		actorsX.append(pos.x)
 		actorsY.append(pos.y)
