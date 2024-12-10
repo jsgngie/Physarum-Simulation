@@ -2,7 +2,7 @@ extends Node2D
 
 @export var width : int = 320
 @export var height : int = 180
-@export var actorSpeed = 0.8
+@export var actorSpeed = 2
 @export var numActors : int = 100
 @export var number_of_groups = 1
 @export var sensorDist : float = 6
