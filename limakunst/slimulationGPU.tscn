@@ -15,7 +15,7 @@ shader = ExtResource("2_umkpx")
 shader_parameter/darkColor = Color(0, 0, 0, 1)
 shader_parameter/lightColor = Color(1.82897e-06, 0.736734, 0.586352, 1)
 shader_parameter/dissapation = 0.01
-shader_parameter/maxBrightness = 1.5
+shader_parameter/maxBrightness = 1.21
 shader_parameter/dataTex = SubResource("GradientTexture2D_yb5a2")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hwcev"]
@@ -23,9 +23,9 @@ size = Vector2(1920, 1080)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m7owj"]
 shader = ExtResource("3_hxg4p")
-shader_parameter/darkColor = Color(0.0159718, 0.00717421, 0.1552, 1)
-shader_parameter/lightColor = Color(1, 0.548034, 0.319912, 1)
-shader_parameter/maxBrightness = 0.855
+shader_parameter/darkColor = Color(1, 1, 1, 1)
+shader_parameter/lightColor = Color(0, 0, 0, 1)
+shader_parameter/maxBrightness = 0.965
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_b4o1a"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
@@ -34,10 +34,10 @@ viewport_path = NodePath("SubViewportContainer/SubViewport")
 script = ExtResource("1_8ughu")
 width = 1920
 height = 1080
-actorSpeed = 1.3
-numActors = 2000000
-turnSpeed = 0.5
-radius = 80
+actorSpeed = 3.0
+numActors = 1000000
+sensorDist = 8.0
+sensorAngle = 0.99
 simulate = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]

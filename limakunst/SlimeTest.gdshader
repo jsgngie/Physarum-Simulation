@@ -15,14 +15,11 @@ void fragment() {
 
 		for (int i = -1; i <= 1; i++) {
 		for (int j = -1; j <= 1; j++) {
-			if (j == 0 && i == 0) {
-				avg += col;
-				continue;
-			}
+			
 			vec3 temp = vec3(0.0);
 			temp += texture(screenTex, uv + vec2(0.001*float(i), 0.001*float(j))).rgb;
 			temp += texture(dataTex, uv + vec2(0.001*float(i), 0.001*float(j))).rgb;
-			avg += min(temp, vec3(1.0));
+			avg += temp / maxBrightness;
 		}
 	}
 	
