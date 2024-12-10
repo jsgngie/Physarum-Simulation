@@ -2,7 +2,7 @@ extends Node2D
 
 @export var width : int = 320
 @export var height : int = 180
-@export var actorSpeed = 0.8
+@export var actorSpeed = 1
 @export var numActors : int = 100
 @export var number_of_groups = 1
 @export var sensorDist : float = 6
@@ -41,7 +41,9 @@ var dispatchSize : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#numActors = Global.number_of_actors_in_groups
+	numActors = Global.number_of_actors_in_groups
+	actorSpeed = Global.speed_of_actors
+	
 	dispatchSize = ceili(float(numActors) / float(work_group_size))
 	mat = $SubViewportContainer/SubViewport/TextureRect.material
 	img = Image.create_empty(width, height, false, Image.FORMAT_RF)
@@ -152,6 +154,7 @@ func _process_compute():
 	rd.compute_list_end()
 	rd.submit()
 	rd.sync()	
+	
 func _updateBuffers():
 	var params : PackedByteArray = PackedFloat32Array(
 		[float(width), float(height), float(numActors), sensorAngle, sensorDist, actorSpeed, turnSpeed]

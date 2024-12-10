@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bwsyrpaplsydf"]
+[gd_scene load_steps=8 format=3 uid="uid://bwsyrpaplsydf"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_loohh"]
 [ext_resource type="FontFile" uid="uid://06a4wcx3tevo" path="res://assets/fonts/Lexend/static/Lexend-Light.ttf" id="2_rgibt"]
@@ -6,48 +6,22 @@
 [sub_resource type="LabelSettings" id="LabelSettings_gb31g"]
 font = ExtResource("2_rgibt")
 font_size = 50
+outline_size = 8
+outline_color = Color(0.0338533, 0.0338533, 0.0338533, 1)
+shadow_size = 15
+shadow_color = Color(0, 0, 0, 0.972549)
 
 [sub_resource type="LabelSettings" id="LabelSettings_okq3w"]
 font = ExtResource("2_rgibt")
 font_size = 19
-font_color = Color(0.860369, 0.860369, 0.860369, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_d0yvq"]
 font = ExtResource("2_rgibt")
 font_size = 19
 font_color = Color(0.389287, 0.389287, 0.389286, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ss8c8"]
-bg_color = Color(0.105588, 0.113471, 0.11011, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.144063, 0.144063, 0.144062, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-expand_margin_left = 50.0
-expand_margin_top = 25.0
-expand_margin_right = 50.0
-expand_margin_bottom = 25.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5io55"]
-bg_color = Color(0.105588, 0.113471, 0.11011, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.144063, 0.144063, 0.144062, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-expand_margin_left = 50.0
-expand_margin_top = 25.0
-expand_margin_right = 50.0
-expand_margin_bottom = 25.0
+[sub_resource type="LabelSettings" id="LabelSettings_mllp8"]
+font = ExtResource("2_rgibt")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jx2xb"]
 bg_color = Color(0.130374, 0.139442, 0.135575, 1)
@@ -60,10 +34,10 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-expand_margin_left = 50.0
-expand_margin_top = 25.0
-expand_margin_right = 50.0
-expand_margin_bottom = 25.0
+expand_margin_left = 15.0
+expand_margin_top = 10.0
+expand_margin_right = 15.0
+expand_margin_bottom = 10.0
 
 [node name="Root" type="Node2D"]
 
@@ -75,9 +49,12 @@ offset_bottom = 648.0
 script = ExtResource("1_loohh")
 
 [node name="MenuBackground" type="ColorRect" parent="Menu"]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.0808895, 0.17455, 0.251686, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu"]
@@ -139,6 +116,15 @@ text = "Number of Groups
 label_settings = SubResource("LabelSettings_d0yvq")
 horizontal_alignment = 1
 
+[node name="ActorSpeed" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabels"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Speed of actors
+"
+label_settings = SubResource("LabelSettings_okq3w")
+horizontal_alignment = 1
+
 [node name="SliderLabelsDisplayed" type="VBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders"]
 layout_mode = 2
 size_flags_horizontal = 6
@@ -160,6 +146,14 @@ text = "1"
 label_settings = SubResource("LabelSettings_d0yvq")
 horizontal_alignment = 1
 
+[node name="DisplayedSpeedOfActors" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabelsDisplayed"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 10
+text = "1"
+label_settings = SubResource("LabelSettings_mllp8")
+horizontal_alignment = 1
+
 [node name="SliderContainer" type="VBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -169,7 +163,7 @@ theme_override_constants/separation = 35
 layout_mode = 2
 size_flags_vertical = 1
 min_value = 100.0
-max_value = 1000.0
+max_value = 1e+06
 value = 100.0
 
 [node name="SliderGroups" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
@@ -179,6 +173,13 @@ min_value = 1.0
 max_value = 4.0
 value = 1.0
 editable = false
+
+[node name="SpeedActors" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+min_value = 1.0
+max_value = 5.0
+value = 1.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -190,11 +191,11 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_rgibt")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxFlat_ss8c8")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_5io55")
+theme_override_styles/focus = SubResource("StyleBoxFlat_jx2xb")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jx2xb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ss8c8")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ss8c8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jx2xb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jx2xb")
 text = "Start"
 
 [node name="QuitButton" type="Button" parent="Menu/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -202,15 +203,16 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("2_rgibt")
 theme_override_font_sizes/font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxFlat_ss8c8")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_5io55")
+theme_override_styles/focus = SubResource("StyleBoxFlat_jx2xb")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jx2xb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ss8c8")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ss8c8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jx2xb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jx2xb")
 text = "Quit
 "
 
 [connection signal="value_changed" from="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer/SliderActorsInGroups" to="Menu" method="_on_slider_actors_in_groups_value_changed"]
 [connection signal="value_changed" from="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer/SliderGroups" to="Menu" method="_on_slider_groups_value_changed"]
+[connection signal="value_changed" from="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer/SpeedActors" to="Menu" method="_on_speed_actors_value_changed"]
 [connection signal="pressed" from="Menu/MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="Menu" method="_on_start_button_pressed"]
 [connection signal="pressed" from="Menu/MarginContainer/VBoxContainer/HBoxContainer/QuitButton" to="Menu" method="_on_quit_button_pressed"]
