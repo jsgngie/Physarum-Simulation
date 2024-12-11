@@ -46,7 +46,7 @@ func _ready() -> void:
 	
 	dispatchSize = ceili(float(numActors) / float(work_group_size))
 	mat = $SubViewportContainer/SubViewport/TextureRect.material
-	img = Image.create_empty(width, height, false, Image.FORMAT_RF)
+	img = Image.create_empty(width, height, false, Image.FORMAT_RGBA8)
 	tex = ImageTexture.create_from_image(img)
 	for i in range(numActors):
 		var rot = randf_range(0.0, 2.0*PI)
@@ -111,7 +111,7 @@ func _ready() -> void:
 	var fmt := RDTextureFormat.new()
 	fmt.width = width
 	fmt.height = height
-	fmt.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
+	fmt.format = RenderingDevice.DATA_FORMAT_B8G8R8A8_UNORM
 	fmt.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
 	trailMapBuffer = rd.texture_create(fmt, view, [img.get_data()])
@@ -131,14 +131,15 @@ func _ready() -> void:
 	uniform_set = rd.uniform_set_create(bindings, shader, 0)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	viewPortTex = $SubViewportContainer/SubViewport.get_texture()
 	viewPortImg = viewPortTex.get_image()
 	#viewPortImg.resize(width, height, 0)
-	viewPortImg.convert(Image.FORMAT_RF)
-	
+	#print(viewPortImg.get_format())
+	#viewPortImg.convert(Image.FORMAT_RF)
 	_process_compute()
 	var trailMapData := rd.texture_get_data(trailMapOutBuffer, 0)
-	img = Image.create_from_data(width, height, false, Image.FORMAT_RF, trailMapData)
+	img = Image.create_from_data(width, height, false, Image.FORMAT_RGBA8, trailMapData)
 	_updateBuffers()
 
 	tex.update(img)
@@ -168,7 +169,7 @@ func _updateBuffers():
 	var fmt := RDTextureFormat.new()
 	fmt.width = width
 	fmt.height = height
-	fmt.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
+	fmt.format = RenderingDevice.DATA_FORMAT_B8G8R8A8_UNORM
 	fmt.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
 	rd.free_rid(trailMapBuffer)
