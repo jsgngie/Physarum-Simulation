@@ -9,8 +9,8 @@ uniform float maxBrightness = 0.75;
 
 void fragment() {
 	vec2 uv = UV;
-	vec3 col = vec3(texture(dataTex, uv).r);
-	vec3 oldCol = vec3(texture(screenTex, uv).r);
+	vec3 col = vec3(texture(dataTex, uv).rgb);
+	vec3 oldCol = vec3(texture(screenTex, uv).rgb);
 	vec3 avg = vec3(0.0);
 
 		for (int i = -1; i <= 1; i++) {

@@ -18,7 +18,6 @@ font_size = 19
 [sub_resource type="LabelSettings" id="LabelSettings_d0yvq"]
 font = ExtResource("2_rgibt")
 font_size = 19
-font_color = Color(0.389287, 0.389287, 0.389286, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mllp8"]
 font = ExtResource("2_rgibt")
@@ -102,7 +101,7 @@ theme_override_constants/separation = 24
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "Number of actors in each group
+text = "Total number of actors
 "
 label_settings = SubResource("LabelSettings_okq3w")
 horizontal_alignment = 1
@@ -163,16 +162,15 @@ theme_override_constants/separation = 35
 layout_mode = 2
 size_flags_vertical = 1
 min_value = 100.0
-max_value = 1e+06
+max_value = 5e+06
 value = 100.0
 
 [node name="SliderGroups" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 min_value = 1.0
-max_value = 4.0
+max_value = 3.0
 value = 1.0
-editable = false
 
 [node name="SpeedActors" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
 layout_mode = 2

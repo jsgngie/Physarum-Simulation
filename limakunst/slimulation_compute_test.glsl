@@ -24,28 +24,15 @@ layout(set = 0, binding = 3, std430) restrict buffer Params {
     float sensorDist;
     float actorSpeed;
     float turnSpeed;
-    int numberOfGroups;
+    float numberOfGroups;
+    float StayAwayCoefficient;
 } params;
 
 layout(r32f, binding = 4) uniform image2D trailMap;
 layout(r32f, binding = 5) uniform image2D trailMapOut;
 
-layout(set = 0, binding = 6, std430) restrict buffer AgentsGroups {
-    int data[];
-} agents_groups;
-
 float rand(float n) {
     return fract(sin(n) * 43758.5453123);
-}
-
-vec4 getColor(int groupNumber) {
-    if (groupNumber == 0) {
-        return vec4(1.0, 0.0, 0.0, 1.0);
-    } else if (groupNumber == 1) {
-        return vec4(0.0, 1.0, 0.0, 1.0);
-    } else {
-        return vec4(0.0, 0.0, 1.0, 1.0);
-    }
 }
 
 float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int groupNumber, float rot) {
@@ -64,7 +51,7 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
         if (i == groupNumber) {
             frontWeight += frontValues[i];
         } else {
-            frontWeight -= 2 * frontValues[i];
+            frontWeight -= frontValues[i];
         }
     }
 
@@ -73,7 +60,7 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
         if (i == groupNumber) {
             rightWeight += rightValues[i];
         } else {
-            rightWeight -= 2 * rightValues[i];
+            rightWeight -= rightValues[i];
         }
     }
 
@@ -82,7 +69,7 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
         if (i == groupNumber) {
             leftWeight += leftValues[i];
         } else {
-            leftWeight -= 2 * leftValues[i];
+            leftWeight -= leftValues[i];
         }
     }
 
@@ -101,6 +88,16 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
     return rot;
 }
 
+vec4 getColor(int groupNumber) {
+    if (groupNumber == 0) {
+        return vec4(1.0, 0.0, 0.0, 1.0);
+    } else if (groupNumber == 1) {
+        return vec4(0.0, 1.0, 0.0, 1.0);
+    } else {
+        return vec4(0.0, 0.0, 1.0, 1.0);
+    }
+}
+
 void main() {
     int gid = int(gl_GlobalInvocationID.x);
 
@@ -109,9 +106,8 @@ void main() {
 
     if (gid >= params.numAgents) return;
 
-    int groupNumber = agents_groups.data[gid];
-
-    if (groupNumber >= 3) { groupNumber = 2; }
+    // calculates the current actor group number
+    int groupNumber = gid % int(params.numberOfGroups);
 
     vec2 pos = vec2(agents_x.data[gid], agents_y.data[gid]);
     float rot = agents_rot.data[gid];
@@ -138,13 +134,32 @@ void main() {
 
     rot = calculateRotation(frontColor, leftColor, rightColor, groupNumber, rot);
 
+    vec4 outputColor = getColor(groupNumber);
+
+    //if ((frontValue < leftValue) && (frontValue < rightValue)) {
+    //    if (rand(rot) < 0.5) {
+    //        rot += params.turnSpeed;
+    //    } else {
+    //        rot -= params.turnSpeed;
+    //    }
+    //} else if (frontValue < rightValue) {
+    //    rot -= params.turnSpeed;
+    //} else if (frontValue < leftValue) {
+    //    rot += params.turnSpeed;
+    //}
+
     vec2 newPos = vec2(
         mod(pos.x + params.actorSpeed * cos(rot), width),
         mod(pos.y + params.actorSpeed * sin(rot), height)
     );
+
+    //vec2 newPos = vec2(
+    //    mod(pos.x + params.actorSpeed, width),
+    //    mod(pos.y + params.actorSpeed, height)
+    //);
+
     ivec2 newPosi = ivec2(int(newPos.x), int(newPos.y));
 
-    vec4 outputColor = getColor(groupNumber);
 
     imageStore(trailMapOut, newPosi, outputColor);
     agents_x.data[gid] = newPos.x;

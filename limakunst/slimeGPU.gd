@@ -4,7 +4,7 @@ extends Node2D
 @export var height : int = 180
 @export var actorSpeed = 1
 @export var numActors : int = 100
-@export var number_of_groups = 1
+@export var numberOfGroups = 1
 @export var sensorDist : float = 6
 @export var sensorAngle : float = 0.7
 @export var turnSpeed = 0.3
@@ -28,6 +28,7 @@ var work_group_size : int = 256
 var actorsXBuffer : RID
 var actorsYBuffer : RID
 var actorsRotBuffer : RID
+var actorsGroupsBuffer : RID
 var trailMapBuffer : RID
 var trailMapOutBuffer : RID
 
@@ -43,14 +44,17 @@ var tempImg : Image
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#numActors = Global.number_of_actors_in_groups
-	#actorSpeed = Global.speed_of_actors
+	numActors = Global.number_of_actors_in_groups
+	actorSpeed = Global.speed_of_actors
+	numberOfGroups = Global.number_of_groups;
 	
 	dispatchSize = ceili(float(numActors) / float(work_group_size))
 	mat = $SubViewportContainer/SubViewport/TextureRect.material
 	img = Image.create_empty(width, height, false, Image.FORMAT_RGBA8)
 	tex = ImageTexture.create_from_image(img)
 	tempImg = Image.create_empty(width, height, false, Image.FORMAT_RGBA8)
+	
+	var actorGroups = []
 	for i in range(numActors):
 		var rot = randf_range(0.0, 2.0*PI)
 		randomize()
@@ -58,6 +62,8 @@ func _ready() -> void:
 		randomize()
 		var idY = randi_range(0, 1)
 		randomize()
+		
+		actorGroups.append(i % int(numberOfGroups));
 		
 		var angle = randf_range(-2*PI, 2*PI)
 		#var pos = Vector2(randf_range(width/2 - radius, width/2 + radius), randf_range(height/2 - radius, height/2 + radius))
@@ -80,13 +86,17 @@ func _ready() -> void:
 	var actorsXBuffer_bytes := PackedFloat32Array(actorsX).to_byte_array()
 	var actorsYBuffer_bytes := PackedFloat32Array(actorsY).to_byte_array()
 	var actorsRotBuffer_bytes := PackedFloat32Array(actorsRot).to_byte_array()
+	var actorsGroupsBuffer_bytes := PackedInt32Array(actorGroups).to_byte_array()
+	
 	actorsXBuffer = rd.storage_buffer_create(actorsXBuffer_bytes.size(), actorsXBuffer_bytes)
 	actorsYBuffer = rd.storage_buffer_create(actorsYBuffer_bytes.size(), actorsYBuffer_bytes)
 	actorsRotBuffer = rd.storage_buffer_create(actorsRotBuffer_bytes.size(), actorsRotBuffer_bytes)
+	actorsGroupsBuffer = rd.storage_buffer_create(actorsGroupsBuffer_bytes.size(), actorsGroupsBuffer_bytes)
 	
 	var actorsXUniform := RDUniform.new()
 	var actorsYUniform := RDUniform.new()
 	var actorsRotUniform := RDUniform.new()
+	var actorsGroupsUniform := RDUniform.new()
 	
 	actorsXUniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
 	actorsXUniform.binding = 0
@@ -100,9 +110,13 @@ func _ready() -> void:
 	actorsRotUniform.binding = 2
 	actorsRotUniform.add_id(actorsRotBuffer)
 	
+	actorsGroupsUniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	actorsGroupsUniform.binding = 6
+	actorsGroupsUniform.add_id(actorsGroupsBuffer)
+	
 	# Parameter buffer
 	var params : PackedByteArray = PackedFloat32Array(
-		[width, height, numActors, sensorAngle, sensorDist, actorSpeed, turnSpeed]
+		[width, height, numActors, sensorAngle, sensorDist, actorSpeed, turnSpeed, numberOfGroups]
 	).to_byte_array()
 	var paramsBuffer = rd.storage_buffer_create(params.size(), params)
 	var paramsUniform := RDUniform.new()
@@ -114,7 +128,7 @@ func _ready() -> void:
 	var fmt := RDTextureFormat.new()
 	fmt.width = width
 	fmt.height = height
-	fmt.format = RenderingDevice.DATA_FORMAT_B8G8R8A8_UNORM
+	fmt.format = RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM
 	fmt.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
 	trailMapBuffer = rd.texture_create(fmt, view, [img.get_data()])
@@ -130,7 +144,8 @@ func _ready() -> void:
 	trailMapOutUniform.binding = 5
 	trailMapOutUniform.add_id(trailMapOutBuffer)
 	
-	bindings = [actorsXUniform, actorsYUniform, actorsRotUniform, paramsUniform, trailMapUniform, trailMapOutUniform]
+	bindings = [actorsXUniform, actorsYUniform, actorsRotUniform, paramsUniform, trailMapUniform, trailMapOutUniform, actorsGroupsUniform]
+	
 	uniform_set = rd.uniform_set_create(bindings, shader, 0)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -184,7 +199,7 @@ func _updateBuffers():
 	var fmt := RDTextureFormat.new()
 	fmt.width = width
 	fmt.height = height
-	fmt.format = RenderingDevice.DATA_FORMAT_B8G8R8A8_UNORM
+	fmt.format = RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM
 	fmt.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
 	rd.free_rid(trailMapBuffer)

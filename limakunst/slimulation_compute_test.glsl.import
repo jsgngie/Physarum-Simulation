@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dutp0o2q8uk27"
+path="res://.godot/imported/slimulation_compute_test.glsl-dd086c243624f0e44af820f95d8caba5.res"
+
+[deps]
+
+source_file="res://slimulation_compute_test.glsl"
+dest_files=["res://.godot/imported/slimulation_compute_test.glsl-dd086c243624f0e44af820f95d8caba5.res"]
+
+[params]
+
