@@ -42,6 +42,8 @@ var tempImg : Image
 @export var radius = 10
 @export var simulate : bool
 
+@onready var finalShader = $FinalImage;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	numActors = Global.number_of_actors_in_groups
@@ -221,3 +223,13 @@ func _updateBuffers():
 	bindings[4] = trailMapUniform
 	bindings[5] = trailMapOutUniform
 	uniform_set = rd.uniform_set_create(bindings, shader, 0)
+
+
+func _on_color_picker_button_color_changed(color):
+	finalShader.material.set_shader_parameter("firstColor", color);
+	
+func _on_second_color_picker_color_changed(color):
+	finalShader.material.set_shader_parameter("secondColor", color);
+
+func _on_third_color_picker_color_changed(color):
+	finalShader.material.set_shader_parameter("thirdColor", color);

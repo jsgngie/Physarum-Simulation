@@ -25,9 +25,9 @@ size = Vector2(2560, 1440)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m7owj"]
 shader = ExtResource("3_hxg4p")
-shader_parameter/firstColor = Color(0.91951, 0.807081, 0, 1)
-shader_parameter/secondColor = Color(1, 0.445206, 0.696155, 1)
-shader_parameter/thirdColor = Color(0, 0, 0, 1)
+shader_parameter/firstColor = Color(0.407886, 0.744951, 0.786328, 1)
+shader_parameter/secondColor = Color(0.847408, 0.43912, 0.34864, 1)
+shader_parameter/thirdColor = Color(0.211946, 0.397853, 0.157644, 1)
 shader_parameter/maxBrightness = 0.925
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_b4o1a"]
@@ -72,3 +72,28 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 texture = SubResource("ViewportTexture_b4o1a")
 expand_mode = 1
+
+[node name="firstColorPicker" type="ColorPickerButton" parent="."]
+offset_left = 34.0
+offset_top = 34.0
+offset_right = 76.0
+offset_bottom = 76.0
+color = Color(0.60933, 0.60933, 0.60933, 1)
+
+[node name="secondColorPicker" type="ColorPickerButton" parent="."]
+offset_left = 91.0
+offset_top = 34.0
+offset_right = 133.0
+offset_bottom = 76.0
+color = Color(0.60933, 0.60933, 0.60933, 1)
+
+[node name="thirdColorPicker" type="ColorPickerButton" parent="."]
+offset_left = 147.0
+offset_top = 34.0
+offset_right = 189.0
+offset_bottom = 76.0
+color = Color(0.60933, 0.60933, 0.60933, 1)
+
+[connection signal="color_changed" from="firstColorPicker" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="color_changed" from="secondColorPicker" to="." method="_on_second_color_picker_color_changed"]
+[connection signal="color_changed" from="thirdColorPicker" to="." method="_on_third_color_picker_color_changed"]
