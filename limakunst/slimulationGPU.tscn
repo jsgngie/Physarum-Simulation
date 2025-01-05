@@ -29,6 +29,7 @@ shader_parameter/firstColor = Color(0.407886, 0.744951, 0.786328, 1)
 shader_parameter/secondColor = Color(0.847408, 0.43912, 0.34864, 1)
 shader_parameter/thirdColor = Color(0.211946, 0.397853, 0.157644, 1)
 shader_parameter/maxBrightness = 0.925
+shader_parameter/clear = 0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_b4o1a"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
@@ -39,6 +40,7 @@ width = 2560
 height = 1440
 actorSpeed = 3
 numActors = 2000000
+numberOfGroups = 3
 sensorDist = 8.0
 sensorAngle = 1.0
 radius = 100
@@ -73,27 +75,54 @@ offset_bottom = 1080.0
 texture = SubResource("ViewportTexture_b4o1a")
 expand_mode = 1
 
-[node name="firstColorPicker" type="ColorPickerButton" parent="."]
-offset_left = 34.0
-offset_top = 34.0
-offset_right = 76.0
-offset_bottom = 76.0
-color = Color(0.60933, 0.60933, 0.60933, 1)
+[node name="controlButtons" type="HBoxContainer" parent="."]
+offset_left = 1726.0
+offset_top = 30.0
+offset_right = 1884.0
+offset_bottom = 80.0
+size_flags_horizontal = 4
+theme_override_constants/separation = 40
 
-[node name="secondColorPicker" type="ColorPickerButton" parent="."]
-offset_left = 91.0
-offset_top = 34.0
-offset_right = 133.0
-offset_bottom = 76.0
-color = Color(0.60933, 0.60933, 0.60933, 1)
+[node name="Restart" type="Button" parent="controlButtons"]
+layout_mode = 2
+text = "Restart
+"
 
-[node name="thirdColorPicker" type="ColorPickerButton" parent="."]
-offset_left = 147.0
-offset_top = 34.0
-offset_right = 189.0
-offset_bottom = 76.0
-color = Color(0.60933, 0.60933, 0.60933, 1)
+[node name="Button" type="Button" parent="controlButtons"]
+layout_mode = 2
+text = "Back
+"
 
-[connection signal="color_changed" from="firstColorPicker" to="." method="_on_color_picker_button_color_changed"]
-[connection signal="color_changed" from="secondColorPicker" to="." method="_on_second_color_picker_color_changed"]
-[connection signal="color_changed" from="thirdColorPicker" to="." method="_on_third_color_picker_color_changed"]
+[node name="colorButtons" type="HBoxContainer" parent="."]
+offset_left = 36.0
+offset_top = 36.0
+offset_right = 194.0
+offset_bottom = 86.0
+size_flags_horizontal = 4
+
+[node name="firstColorPicker" type="ColorPickerButton" parent="colorButtons"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.60933, 0.60933, 0.60933, 1)
+edit_alpha = false
+
+[node name="secondColorPicker" type="ColorPickerButton" parent="colorButtons"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.60933, 0.60933, 0.60933, 1)
+edit_alpha = false
+
+[node name="thirdColorPicker" type="ColorPickerButton" parent="colorButtons"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.60933, 0.60933, 0.60933, 1)
+edit_alpha = false
+
+[node name="hideLabel" type="Label" parent="colorButtons"]
+layout_mode = 2
+text = "H - Hide UI"
+
+[connection signal="pressed" from="controlButtons/Restart" to="." method="_on_restart_button_pressed"]
+[connection signal="color_changed" from="colorButtons/firstColorPicker" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="color_changed" from="colorButtons/secondColorPicker" to="." method="_on_second_color_picker_color_changed"]
+[connection signal="color_changed" from="colorButtons/thirdColorPicker" to="." method="_on_third_color_picker_color_changed"]

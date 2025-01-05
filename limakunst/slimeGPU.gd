@@ -12,7 +12,6 @@ var img
 var texture
 var emptyData = []
 var viewPortData = []
-var data = []
 var actorsX = []
 var actorsY = []
 var actorsRot = []
@@ -44,11 +43,35 @@ var tempImg : Image
 
 @onready var finalShader = $FinalImage;
 
+@onready var firstPicker = $colorButtons/firstColorPicker
+@onready var secondPicker = $colorButtons/secondColorPicker
+@onready var thirdPicker = $colorButtons/thirdColorPicker
+
+@onready var colorButtons = $colorButtons
+@onready var controlButtons = $controlButtons
+
+var isHidden = false
+
+# Sets up the colors.
+func assignColors():
+	_on_color_picker_button_color_changed(Global.firstColor)
+	_on_second_color_picker_color_changed(Global.secondColor)
+	_on_third_color_picker_color_changed(Global.thirdColor)
+	
+	firstPicker.color = Global.firstColor
+	secondPicker.color = Global.secondColor
+	thirdPicker.color = Global.thirdColor
+	
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	numActors = Global.number_of_actors_in_groups
 	actorSpeed = Global.speed_of_actors
 	numberOfGroups = Global.number_of_groups;
+	sensorDist = Global.sensorDistance
+	sensorAngle = Global.sensorAngle
+
+	assignColors()
 	
 	dispatchSize = ceili(float(numActors) / float(work_group_size))
 	mat = $SubViewportContainer/SubViewport/TextureRect.material
@@ -65,8 +88,6 @@ func _ready() -> void:
 		var idY = randi_range(0, 1)
 		randomize()
 		
-		actorGroups.append(i % int(numberOfGroups));
-		
 		var angle = randf_range(-2*PI, 2*PI)
 		#var pos = Vector2(randf_range(width/2 - radius, width/2 + radius), randf_range(height/2 - radius, height/2 + radius))
 		var pos = Vector2(width/2 + radius * cos(angle) * randf(), height/2 + radius * sin(angle) * randf())
@@ -75,6 +96,7 @@ func _ready() -> void:
 		actorsX.append(pos.x)
 		actorsY.append(pos.y)
 		actorsRot.append(rot)
+		actorGroups.append(i % int(numberOfGroups));
 	
 	# Create a local rendering device.
 	rd = RenderingServer.create_local_rendering_device()
@@ -149,8 +171,22 @@ func _ready() -> void:
 	bindings = [actorsXUniform, actorsYUniform, actorsRotUniform, paramsUniform, trailMapUniform, trailMapOutUniform, actorsGroupsUniform]
 	
 	uniform_set = rd.uniform_set_create(bindings, shader, 0)
+	
+func hideUI():
+	if isHidden:
+		isHidden = false	
+		controlButtons.visible = true
+		colorButtons.visible = true
+	else:
+		isHidden = true
+		controlButtons.visible = false
+		colorButtons.visible = false
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("hide_ui"):
+		hideUI()
+		
 	var start = Time.get_ticks_msec()
 	viewPortTex = $SubViewportContainer/SubViewport.get_texture()
 	print("getting texture: " + str(Time.get_ticks_msec() - start))
@@ -224,12 +260,18 @@ func _updateBuffers():
 	bindings[5] = trailMapOutUniform
 	uniform_set = rd.uniform_set_create(bindings, shader, 0)
 
-
 func _on_color_picker_button_color_changed(color):
-	finalShader.material.set_shader_parameter("firstColor", color);
+	finalShader.material.set_shader_parameter("firstColor", color)
 	
 func _on_second_color_picker_color_changed(color):
-	finalShader.material.set_shader_parameter("secondColor", color);
+	finalShader.material.set_shader_parameter("secondColor", color)
 
 func _on_third_color_picker_color_changed(color):
-	finalShader.material.set_shader_parameter("thirdColor", color);
+	finalShader.material.set_shader_parameter("thirdColor", color)
+
+func _on_restart_button_pressed():
+	get_tree().reload_current_scene()
+
+func _on_back_button_pressed():
+	get_owner().queue_free()
+	get_tree().change_scene_to_file("res://root.tscn")

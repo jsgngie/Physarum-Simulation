@@ -1,216 +1,321 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwsyrpaplsydf"]
+[gd_scene load_steps=6 format=3 uid="uid://bwsyrpaplsydf"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_loohh"]
-[ext_resource type="FontFile" uid="uid://06a4wcx3tevo" path="res://assets/fonts/Lexend/static/Lexend-Light.ttf" id="2_rgibt"]
+[ext_resource type="FontFile" uid="uid://ilrxwre3qnlv" path="res://assets/fonts/Lexend/Lexend-VariableFont_wght.ttf" id="1_nph2s"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_gb31g"]
-font = ExtResource("2_rgibt")
-font_size = 50
-outline_size = 8
-outline_color = Color(0.0338533, 0.0338533, 0.0338533, 1)
-shadow_size = 15
-shadow_color = Color(0, 0, 0, 0.972549)
+[sub_resource type="Theme" id="Theme_px5pk"]
+default_font = ExtResource("1_nph2s")
 
-[sub_resource type="LabelSettings" id="LabelSettings_okq3w"]
-font = ExtResource("2_rgibt")
-font_size = 19
+[sub_resource type="LabelSettings" id="LabelSettings_4ugva"]
+font = ExtResource("1_nph2s")
+font_size = 70
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 29
+shadow_color = Color(0, 0, 0, 0.0862745)
+shadow_offset = Vector2(-10, 2)
 
-[sub_resource type="LabelSettings" id="LabelSettings_d0yvq"]
-font = ExtResource("2_rgibt")
-font_size = 19
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mcfy1"]
+bg_color = Color(0.190762, 0.190762, 0.190762, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_mllp8"]
-font = ExtResource("2_rgibt")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jx2xb"]
-bg_color = Color(0.130374, 0.139442, 0.135575, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.144063, 0.144063, 0.144062, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-expand_margin_left = 15.0
-expand_margin_top = 10.0
-expand_margin_right = 15.0
-expand_margin_bottom = 10.0
-
-[node name="Root" type="Node2D"]
-
-[node name="Menu" type="Control" parent="."]
+[node name="Root" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_px5pk")
 script = ExtResource("1_loohh")
 
-[node name="MenuBackground" type="ColorRect" parent="Menu"]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0808895, 0.17455, 0.251686, 1)
+color = Color(0.2484, 0.2484, 0.2484, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="Menu"]
+[node name="Header" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.224
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.00093, 1)
-theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 20
+scale = Vector2(1, 0.993838)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 60
-
-[node name="Separator" type="Control" parent="Menu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Menu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Interactive Slimulation
+[node name="Title" type="Label" parent="Header"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -44.0
+offset_right = 190.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Slimulation
 "
-label_settings = SubResource("LabelSettings_gb31g")
-horizontal_alignment = 1
-vertical_alignment = 1
+label_settings = SubResource("LabelSettings_4ugva")
 
-[node name="InteractableContainer" type="HBoxContainer" parent="Menu/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 120
+[node name="Controls" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.055
+anchor_top = 0.22
+anchor_right = 0.505
+anchor_bottom = 0.925
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
-[node name="Sliders" type="HBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 20
+[node name="LeftSide" type="VBoxContainer" parent="Controls"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.052
+anchor_right = 0.728
+anchor_bottom = 0.087
+offset_right = 270.0
+offset_bottom = 425.0
+theme_override_constants/separation = 11
 
-[node name="SliderLabels" type="VBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders"]
+[node name="Count" type="VBoxContainer" parent="Controls/LeftSide"]
 layout_mode = 2
-theme_override_constants/separation = 24
 
-[node name="NumberOfActorsGroup" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabels"]
+[node name="actorCountLabel" type="Label" parent="Controls/LeftSide/Count"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Total number of actors
-"
-label_settings = SubResource("LabelSettings_okq3w")
-horizontal_alignment = 1
-
-[node name="NumberOfGroups" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabels"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Number of Groups
-"
-label_settings = SubResource("LabelSettings_d0yvq")
+text = "Number of slime particles"
 horizontal_alignment = 1
 
-[node name="ActorSpeed" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabels"]
+[node name="actorCountSlider" type="HSlider" parent="Controls/LeftSide/Count"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Speed of actors
-"
-label_settings = SubResource("LabelSettings_okq3w")
-horizontal_alignment = 1
-
-[node name="SliderLabelsDisplayed" type="VBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders"]
-layout_mode = 2
-size_flags_horizontal = 6
-theme_override_constants/separation = 20
-
-[node name="DisplayedNumberOfActorsGroup" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabelsDisplayed"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "100"
-label_settings = SubResource("LabelSettings_okq3w")
-horizontal_alignment = 1
-
-[node name="DisplayedNumberOfGroups" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabelsDisplayed"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "1"
-label_settings = SubResource("LabelSettings_d0yvq")
-horizontal_alignment = 1
-
-[node name="DisplayedSpeedOfActors" type="Label" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderLabelsDisplayed"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 10
-text = "1"
-label_settings = SubResource("LabelSettings_mllp8")
-horizontal_alignment = 1
-
-[node name="SliderContainer" type="VBoxContainer" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 35
-
-[node name="SliderActorsInGroups" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
-layout_mode = 2
-size_flags_vertical = 1
 min_value = 100.0
 max_value = 5e+06
 value = 100.0
+tick_count = 10
 
-[node name="SliderGroups" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
+[node name="actorCountLabelDisplay" type="Label" parent="Controls/LeftSide/Count"]
 layout_mode = 2
-size_flags_vertical = 1
+text = "100
+"
+horizontal_alignment = 1
+
+[node name="Group" type="VBoxContainer" parent="Controls/LeftSide"]
+layout_mode = 2
+
+[node name="actorGroupLabel" type="Label" parent="Controls/LeftSide/Group"]
+layout_mode = 2
+text = "Number of slime species
+"
+horizontal_alignment = 1
+
+[node name="actorGroupSlider" type="HSlider" parent="Controls/LeftSide/Group"]
+layout_mode = 2
 min_value = 1.0
 max_value = 3.0
 value = 1.0
+tick_count = 3
 
-[node name="SpeedActors" type="HSlider" parent="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer"]
+[node name="actorGroupLabelDisplay" type="Label" parent="Controls/LeftSide/Group"]
 layout_mode = 2
-size_flags_vertical = 1
-min_value = 1.0
-max_value = 5.0
-value = 1.0
+text = "1
+"
+horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/MarginContainer/VBoxContainer"]
+[node name="Speed" type="VBoxContainer" parent="Controls/LeftSide"]
+layout_mode = 2
+
+[node name="actorSpeedLabel" type="Label" parent="Controls/LeftSide/Speed"]
+layout_mode = 2
+text = "Speed of particles"
+horizontal_alignment = 1
+
+[node name="actorSpeedSlider" type="HSlider" parent="Controls/LeftSide/Speed"]
+layout_mode = 2
+min_value = 1.0
+max_value = 8.0
+value = 1.0
+tick_count = 8
+
+[node name="actorSpeedLabelDisplay" type="Label" parent="Controls/LeftSide/Speed"]
+layout_mode = 2
+text = "1
+"
+horizontal_alignment = 1
+
+[node name="Sensor distance" type="VBoxContainer" parent="Controls/LeftSide"]
+layout_mode = 2
+
+[node name="sensorDistanceLabel" type="Label" parent="Controls/LeftSide/Sensor distance"]
+layout_mode = 2
+text = "Sensor distance"
+horizontal_alignment = 1
+
+[node name="sensorDistanceSlider" type="HSlider" parent="Controls/LeftSide/Sensor distance"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+tick_count = 10
+
+[node name="sensorDistanceLabelDisplayed" type="Label" parent="Controls/LeftSide/Sensor distance"]
+layout_mode = 2
+text = "1
+"
+horizontal_alignment = 1
+
+[node name="Sensor angle" type="VBoxContainer" parent="Controls/LeftSide"]
+layout_mode = 2
+
+[node name="sensorAngleLabel" type="Label" parent="Controls/LeftSide/Sensor angle"]
+layout_mode = 2
+text = "Sensor angle
+"
+horizontal_alignment = 1
+
+[node name="sensorAngleSlider" type="HSlider" parent="Controls/LeftSide/Sensor angle"]
+layout_mode = 2
+max_value = 3.142
+step = 0.01
+tick_count = 1
+
+[node name="sensorAngleLabelDisplayed" type="Label" parent="Controls/LeftSide/Sensor angle"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="buttonContainer" type="HBoxContainer" parent="Controls/LeftSide"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 200
+size_flags_vertical = 10
+theme_override_constants/separation = 70
 
-[node name="StartButton" type="Button" parent="Menu/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="quitButton" type="Button" parent="Controls/LeftSide/buttonContainer"]
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("2_rgibt")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/normal = SubResource("StyleBoxFlat_jx2xb")
-text = "Start"
-
-[node name="QuitButton" type="Button" parent="Menu/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme_override_fonts/font = ExtResource("2_rgibt")
-theme_override_font_sizes/font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jx2xb")
-theme_override_styles/normal = SubResource("StyleBoxFlat_jx2xb")
-text = "Quit
+size_flags_horizontal = 4
+theme_override_styles/hover = SubResource("StyleBoxFlat_mcfy1")
+text = "Exit
 "
 
-[connection signal="value_changed" from="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer/SliderActorsInGroups" to="Menu" method="_on_slider_actors_in_groups_value_changed"]
-[connection signal="value_changed" from="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer/SliderGroups" to="Menu" method="_on_slider_groups_value_changed"]
-[connection signal="value_changed" from="Menu/MarginContainer/VBoxContainer/InteractableContainer/Sliders/SliderContainer/SpeedActors" to="Menu" method="_on_speed_actors_value_changed"]
-[connection signal="pressed" from="Menu/MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="Menu" method="_on_start_button_pressed"]
-[connection signal="pressed" from="Menu/MarginContainer/VBoxContainer/HBoxContainer/QuitButton" to="Menu" method="_on_quit_button_pressed"]
+[node name="startButton" type="Button" parent="Controls/LeftSide/buttonContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/hover = SubResource("StyleBoxFlat_mcfy1")
+text = "Start
+"
+
+[node name="ColorPickerContainer" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.55
+anchor_top = 0.192
+anchor_right = 0.922
+anchor_bottom = 0.875
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorPickerContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="colorLabel" type="Label" parent="ColorPickerContainer/VBoxContainer"]
+layout_mode = 2
+text = "Color of slimes"
+horizontal_alignment = 1
+
+[node name="actorColors" type="HBoxContainer" parent="ColorPickerContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 25
+
+[node name="firstBack" type="ColorRect" parent="ColorPickerContainer/VBoxContainer/actorColors"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+color = Color(0.247059, 0.247059, 0.247059, 1)
+
+[node name="firstActorColor" type="ColorRect" parent="ColorPickerContainer/VBoxContainer/actorColors/firstBack"]
+custom_minimum_size = Vector2(50, 50)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 1
+color = Color(1, 0, 0, 1)
+
+[node name="secondBack" type="ColorRect" parent="ColorPickerContainer/VBoxContainer/actorColors"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+color = Color(0.247059, 0.247059, 0.247059, 1)
+
+[node name="secondActorColor" type="ColorRect" parent="ColorPickerContainer/VBoxContainer/actorColors/secondBack"]
+custom_minimum_size = Vector2(50, 50)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 1, 0, 1)
+
+[node name="thirdBack" type="ColorRect" parent="ColorPickerContainer/VBoxContainer/actorColors"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+color = Color(0.247059, 0.247059, 0.247059, 1)
+
+[node name="thirdActorColor" type="ColorRect" parent="ColorPickerContainer/VBoxContainer/actorColors/thirdBack"]
+custom_minimum_size = Vector2(50, 50)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 1, 1)
+
+[node name="ColorPicker" type="ColorPicker" parent="ColorPickerContainer/VBoxContainer"]
+layout_mode = 2
+edit_alpha = false
+
+[connection signal="value_changed" from="Controls/LeftSide/Count/actorCountSlider" to="." method="_on_slider_actors_in_groups_value_changed"]
+[connection signal="value_changed" from="Controls/LeftSide/Group/actorGroupSlider" to="." method="_on_slider_groups_value_changed"]
+[connection signal="value_changed" from="Controls/LeftSide/Speed/actorSpeedSlider" to="." method="_on_speed_actors_value_changed"]
+[connection signal="value_changed" from="Controls/LeftSide/Sensor distance/sensorDistanceSlider" to="." method="_on_sensor_distance_value_changed"]
+[connection signal="value_changed" from="Controls/LeftSide/Sensor angle/sensorAngleSlider" to="." method="_on_sensor_angle_value_changed"]
+[connection signal="pressed" from="Controls/LeftSide/buttonContainer/quitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="Controls/LeftSide/buttonContainer/startButton" to="." method="_on_start_button_pressed"]
+[connection signal="gui_input" from="ColorPickerContainer/VBoxContainer/actorColors/firstBack/firstActorColor" to="." method="_on_first_actor_color_gui_input"]
+[connection signal="gui_input" from="ColorPickerContainer/VBoxContainer/actorColors/secondBack/secondActorColor" to="." method="_on_second_actor_color_gui_input"]
+[connection signal="gui_input" from="ColorPickerContainer/VBoxContainer/actorColors/thirdBack/thirdActorColor" to="." method="_on_third_actor_color_gui_input"]
+[connection signal="color_changed" from="ColorPickerContainer/VBoxContainer/ColorPicker" to="." method="_on_color_picker_color_changed"]
