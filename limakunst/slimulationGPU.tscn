@@ -120,9 +120,118 @@ edit_alpha = false
 
 [node name="hideLabel" type="Label" parent="colorButtons"]
 layout_mode = 2
-text = "H - Hide UI"
+text = "      H - Hide UI"
+
+[node name="sliderControlBackground" type="ColorRect" parent="."]
+offset_left = 15.0
+offset_top = 103.0
+offset_right = 481.0
+offset_bottom = 234.0
+scale = Vector2(1.08, 2.52)
+size_flags_vertical = 3
+color = Color(0.231373, 0.231373, 0.231373, 0.529412)
+
+[node name="sliderControlContainer" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_top = 0.052
+anchor_right = 0.728
+anchor_bottom = 0.087
+offset_left = 33.0
+offset_top = 110.0
+offset_right = 500.0
+offset_bottom = 565.0
+theme_override_constants/separation = 11
+metadata/_edit_use_anchors_ = true
+
+[node name="Group" type="VBoxContainer" parent="sliderControlContainer"]
+layout_mode = 2
+
+[node name="actorGroupLabel" type="Label" parent="sliderControlContainer/Group"]
+layout_mode = 2
+text = "Number of slime species
+"
+horizontal_alignment = 1
+
+[node name="actorGroupSlider" type="HSlider" parent="sliderControlContainer/Group"]
+layout_mode = 2
+min_value = 1.0
+max_value = 3.0
+value = 1.0
+tick_count = 3
+
+[node name="actorGroupLabelDisplay" type="Label" parent="sliderControlContainer/Group"]
+layout_mode = 2
+text = "1
+"
+horizontal_alignment = 1
+
+[node name="Speed" type="VBoxContainer" parent="sliderControlContainer"]
+layout_mode = 2
+
+[node name="actorSpeedLabel" type="Label" parent="sliderControlContainer/Speed"]
+layout_mode = 2
+text = "Speed of particles"
+horizontal_alignment = 1
+
+[node name="actorSpeedSlider" type="HSlider" parent="sliderControlContainer/Speed"]
+layout_mode = 2
+min_value = 1.0
+max_value = 40.0
+value = 1.0
+tick_count = 8
+
+[node name="actorSpeedLabelDisplay" type="Label" parent="sliderControlContainer/Speed"]
+layout_mode = 2
+text = "1
+"
+horizontal_alignment = 1
+
+[node name="Sensor distance" type="VBoxContainer" parent="sliderControlContainer"]
+layout_mode = 2
+
+[node name="sensorDistanceLabel" type="Label" parent="sliderControlContainer/Sensor distance"]
+layout_mode = 2
+text = "Sensor distance"
+horizontal_alignment = 1
+
+[node name="sensorDistanceSlider" type="HSlider" parent="sliderControlContainer/Sensor distance"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+tick_count = 10
+
+[node name="sensorDistanceLabelDisplayed" type="Label" parent="sliderControlContainer/Sensor distance"]
+layout_mode = 2
+text = "1
+"
+horizontal_alignment = 1
+
+[node name="Sensor angle" type="VBoxContainer" parent="sliderControlContainer"]
+layout_mode = 2
+
+[node name="sensorAngleLabel" type="Label" parent="sliderControlContainer/Sensor angle"]
+layout_mode = 2
+text = "Sensor angle
+"
+horizontal_alignment = 1
+
+[node name="sensorAngleSlider" type="HSlider" parent="sliderControlContainer/Sensor angle"]
+layout_mode = 2
+max_value = 3.142
+step = 0.01
+tick_count = 1
+
+[node name="sensorAngleLabelDisplayed" type="Label" parent="sliderControlContainer/Sensor angle"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="controlButtons/Restart" to="." method="_on_restart_button_pressed"]
 [connection signal="color_changed" from="colorButtons/firstColorPicker" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="color_changed" from="colorButtons/secondColorPicker" to="." method="_on_second_color_picker_color_changed"]
 [connection signal="color_changed" from="colorButtons/thirdColorPicker" to="." method="_on_third_color_picker_color_changed"]
+[connection signal="value_changed" from="sliderControlContainer/Group/actorGroupSlider" to="." method="_update_groups"]
+[connection signal="value_changed" from="sliderControlContainer/Speed/actorSpeedSlider" to="." method="_on_actor_speed_slider_value_changed"]
+[connection signal="value_changed" from="sliderControlContainer/Sensor distance/sensorDistanceSlider" to="." method="_on_sensor_distance_slider_value_changed"]
+[connection signal="value_changed" from="sliderControlContainer/Sensor angle/sensorAngleSlider" to="." method="_on_sensor_angle_slider_value_changed"]

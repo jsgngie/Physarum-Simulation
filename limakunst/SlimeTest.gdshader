@@ -27,8 +27,8 @@ void fragment() {
 	avg = avg / 9.0;
 	col = max(avg, oldCol);
 	
-	col = mix(col, vec3(0.0), dissapation);
-	//col = max(col - dissapation, 0.0);
+	//col = mix(col, vec3(0.0), dissapation);
+	col = max(col - dissapation, 0.0);
 	COLOR.rgb = col;
 }
 

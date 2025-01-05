@@ -50,6 +50,19 @@ var tempImg : Image
 @onready var colorButtons = $colorButtons
 @onready var controlButtons = $controlButtons
 
+@onready var speedLabel = $sliderControlContainer/Speed/actorSpeedLabelDisplay
+@onready var distanceLabel = $"sliderControlContainer/Sensor distance/sensorDistanceLabelDisplayed"
+@onready var angleLabel = $"sliderControlContainer/Sensor angle/sensorAngleLabelDisplayed"
+@onready var groupLabel = $sliderControlContainer/Group/actorGroupLabelDisplay
+
+@onready var sliderContainer = $sliderControlContainer
+@onready var sliderBackground = $sliderControlBackground
+
+@onready var groupSlider = $sliderControlContainer/Group/actorGroupSlider
+@onready var speedSlider = $sliderControlContainer/Speed/actorSpeedSlider
+@onready var distanceSlider =$"sliderControlContainer/Sensor distance/sensorDistanceSlider"
+@onready var angleSlider = $"sliderControlContainer/Sensor angle/sensorAngleSlider"
+
 var isHidden = false
 
 # Sets up the colors.
@@ -61,8 +74,18 @@ func assignColors():
 	firstPicker.color = Global.firstColor
 	secondPicker.color = Global.secondColor
 	thirdPicker.color = Global.thirdColor
-	
 
+func updateLabels():
+	angleLabel.text = String.num(actorSpeed, 2)
+	distanceLabel.text = String.num(sensorDist, 0)
+	speedLabel.text = String.num(sensorAngle, 0)
+	groupLabel.text = String.num(numberOfGroups, 0)
+	
+	speedSlider.value = actorSpeed
+	distanceSlider.value = sensorDist
+	angleSlider.value = sensorAngle
+	groupSlider.value = numberOfGroups
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	numActors = Global.number_of_actors_in_groups
@@ -72,6 +95,7 @@ func _ready() -> void:
 	sensorAngle = Global.sensorAngle
 
 	assignColors()
+	updateLabels()
 	
 	dispatchSize = ceili(float(numActors) / float(work_group_size))
 	mat = $SubViewportContainer/SubViewport/TextureRect.material
@@ -177,10 +201,14 @@ func hideUI():
 		isHidden = false	
 		controlButtons.visible = true
 		colorButtons.visible = true
+		sliderContainer.visible = true
+		sliderBackground.visible = true
 	else:
 		isHidden = true
 		controlButtons.visible = false
 		colorButtons.visible = false
+		sliderContainer.visible = false
+		sliderBackground.visible = false
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -222,7 +250,9 @@ func _process_compute():
 	rd.compute_list_dispatch(compute_list, dispatchSize, 1, 1)
 	rd.compute_list_end()
 	rd.submit()
-	rd.sync()	
+	rd.sync()
+	
+
 	
 func _updateBuffers():
 	var params : PackedByteArray = PackedFloat32Array(
@@ -260,6 +290,29 @@ func _updateBuffers():
 	bindings[5] = trailMapOutUniform
 	uniform_set = rd.uniform_set_create(bindings, shader, 0)
 
+#stupid workaround to not call this on initialization
+var firstTime = true
+
+func _update_groups(value):
+	if firstTime:
+		firstTime = false
+		return
+	
+	groupLabel.text = String.num(value, 0)
+	var actorGroups = []
+	for i in range(numActors):
+		actorGroups.append(i % int(value))
+	
+	var actorsGroupsBuffer_bytes := PackedInt32Array(actorGroups).to_byte_array()
+	actorsGroupsBuffer = rd.storage_buffer_create(actorsGroupsBuffer_bytes.size(), actorsGroupsBuffer_bytes)
+
+	var actorGroupsUniform := RDUniform.new()
+	actorGroupsUniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	actorGroupsUniform.binding = 6
+	actorGroupsUniform.add_id(actorsGroupsBuffer)
+	bindings[6] = actorGroupsUniform
+	uniform_set = rd.uniform_set_create(bindings, shader, 0)
+
 func _on_color_picker_button_color_changed(color):
 	finalShader.material.set_shader_parameter("firstColor", color)
 	
@@ -275,3 +328,15 @@ func _on_restart_button_pressed():
 func _on_back_button_pressed():
 	get_owner().queue_free()
 	get_tree().change_scene_to_file("res://root.tscn")
+
+func _on_sensor_angle_slider_value_changed(value):
+	sensorAngle = value
+	angleLabel.text = String.num(value, 2)
+	
+func _on_sensor_distance_slider_value_changed(value):
+	sensorDist = value
+	distanceLabel.text = String.num(value, 0)
+	
+func _on_actor_speed_slider_value_changed(value):
+	actorSpeed = value
+	speedLabel.text = String.num(value, 0)
