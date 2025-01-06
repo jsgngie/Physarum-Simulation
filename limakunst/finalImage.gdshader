@@ -15,6 +15,7 @@ void fragment() {
 	vec3 blueMapped = thirdColor * col.b;
 	
 	vec3 finalColor = redMapped + greenMapped + blueMapped;
+	finalColor = min(finalColor, vec3(1.0));
 	
 	if (clear == 1) {
 		COLOR.rgba = vec4(vec3(0.0, 0.0, 0.0), 1.0);

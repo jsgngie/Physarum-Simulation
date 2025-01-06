@@ -5,6 +5,7 @@ extends Control
 @onready var displayed_speed_of_actors = $Controls/LeftSide/Speed/actorSpeedLabelDisplay
 @onready var displayed_sensor_distance = $"Controls/LeftSide/Sensor distance/sensorDistanceLabelDisplayed"
 @onready var displayed_sensor_angle = $"Controls/LeftSide/Sensor angle/sensorAngleLabelDisplayed"
+@onready var displayed_turnSpeed = $Controls/LeftSide/TurnSpeed/actorTurnSpeedLabelDisplay
 
 #click backgrounds for focus
 @onready var firstBack = $ColorPickerContainer/VBoxContainer/actorColors/firstBack
@@ -81,3 +82,8 @@ func _on_color_picker_color_changed(color):
 	if currentlyFocusedColor:
 		currentlyFocusedColor.color = color
 	
+
+
+func _on_actor_turn_speed_slider_value_changed(value: float) -> void:
+	Global.turnSpeed = value
+	displayed_turnSpeed.text = String.num(value, 2)

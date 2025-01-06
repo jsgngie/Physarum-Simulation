@@ -148,6 +148,28 @@ text = "1
 "
 horizontal_alignment = 1
 
+[node name="TurnSpeed" type="VBoxContainer" parent="Controls/LeftSide"]
+layout_mode = 2
+
+[node name="actorTurnSpeedLabel" type="Label" parent="Controls/LeftSide/TurnSpeed"]
+layout_mode = 2
+text = "Turning speed of particles"
+horizontal_alignment = 1
+
+[node name="actorTurnSpeedSlider" type="HSlider" parent="Controls/LeftSide/TurnSpeed"]
+layout_mode = 2
+min_value = 0.1
+max_value = 2.0
+step = 0.01
+value = 0.3
+tick_count = 8
+
+[node name="actorTurnSpeedLabelDisplay" type="Label" parent="Controls/LeftSide/TurnSpeed"]
+layout_mode = 2
+text = "1
+"
+horizontal_alignment = 1
+
 [node name="Sensor distance" type="VBoxContainer" parent="Controls/LeftSide"]
 layout_mode = 2
 
@@ -313,6 +335,7 @@ edit_alpha = false
 [connection signal="value_changed" from="Controls/LeftSide/Count/actorCountSlider" to="." method="_on_slider_actors_in_groups_value_changed"]
 [connection signal="value_changed" from="Controls/LeftSide/Group/actorGroupSlider" to="." method="_on_slider_groups_value_changed"]
 [connection signal="value_changed" from="Controls/LeftSide/Speed/actorSpeedSlider" to="." method="_on_speed_actors_value_changed"]
+[connection signal="value_changed" from="Controls/LeftSide/TurnSpeed/actorTurnSpeedSlider" to="." method="_on_actor_turn_speed_slider_value_changed"]
 [connection signal="value_changed" from="Controls/LeftSide/Sensor distance/sensorDistanceSlider" to="." method="_on_sensor_distance_value_changed"]
 [connection signal="value_changed" from="Controls/LeftSide/Sensor angle/sensorAngleSlider" to="." method="_on_sensor_angle_value_changed"]
 [connection signal="pressed" from="Controls/LeftSide/buttonContainer/quitButton" to="." method="_on_quit_button_pressed"]
