@@ -56,6 +56,7 @@ var tempImg : Image
 @onready var distanceLabel = $"sliderControlContainer/Sensor distance/sensorDistanceLabelDisplayed"
 @onready var angleLabel = $"sliderControlContainer/Sensor angle/sensorAngleLabelDisplayed"
 @onready var groupLabel = $sliderControlContainer/Group/actorGroupLabelDisplay
+@onready var turnSpeedLabel = $sliderControlContainer/TurnSpeed/actorTurnSpeedLabelDisplay
 
 @onready var sliderContainer = $sliderControlContainer
 @onready var sliderBackground = $sliderControlBackground
@@ -64,6 +65,7 @@ var tempImg : Image
 @onready var speedSlider = $sliderControlContainer/Speed/actorSpeedSlider
 @onready var distanceSlider =$"sliderControlContainer/Sensor distance/sensorDistanceSlider"
 @onready var angleSlider = $"sliderControlContainer/Sensor angle/sensorAngleSlider"
+@onready var turnSpeedSlider = $sliderControlContainer/TurnSpeed/actorTurnSpeedSlider
 
 var isHidden = false
 
@@ -82,8 +84,10 @@ func updateLabels():
 	distanceLabel.text = String.num(sensorDist, 0)
 	speedLabel.text = String.num(sensorAngle, 0)
 	groupLabel.text = String.num(numberOfGroups, 0)
+	turnSpeedLabel.text = String.num(turnSpeed, 2)
 	
 	speedSlider.value = actorSpeed
+	turnSpeedSlider.value = turnSpeed
 	distanceSlider.value = sensorDist
 	angleSlider.value = sensorAngle
 	groupSlider.value = numberOfGroups
@@ -95,7 +99,7 @@ func _ready() -> void:
 	numberOfGroups = Global.number_of_groups;
 	sensorDist = Global.sensorDistance
 	sensorAngle = Global.sensorAngle
-
+	turnSpeed = Global.turnSpeed
 	assignColors()
 	updateLabels()
 	
@@ -312,7 +316,7 @@ func _update_groups(value):
 	if firstTime:
 		firstTime = false
 		return
-	
+	Global.number_of_groups = value
 	groupLabel.text = String.num(value, 0)
 	var actorGroups = []
 	for i in range(numActors):
@@ -329,12 +333,15 @@ func _update_groups(value):
 	uniform_set = rd.uniform_set_create(bindings, shader, 0)
 
 func _on_color_picker_button_color_changed(color):
+	Global.firstColor = color
 	finalShader.material.set_shader_parameter("firstColor", color)
 	
 func _on_second_color_picker_color_changed(color):
+	Global.secondColor = color
 	finalShader.material.set_shader_parameter("secondColor", color)
 
 func _on_third_color_picker_color_changed(color):
+	Global.thirdColor = color
 	finalShader.material.set_shader_parameter("thirdColor", color)
 
 func _on_restart_button_pressed():
@@ -345,13 +352,22 @@ func _on_back_button_pressed():
 	get_tree().change_scene_to_file("res://root.tscn")
 
 func _on_sensor_angle_slider_value_changed(value):
+	Global.sensorAngle = value
 	sensorAngle = value
 	angleLabel.text = String.num(value, 2)
 	
 func _on_sensor_distance_slider_value_changed(value):
+	Global.sensorDistance = value
 	sensorDist = value
 	distanceLabel.text = String.num(value, 0)
 	
 func _on_actor_speed_slider_value_changed(value):
+	Global.speed_of_actors = value
 	actorSpeed = value
 	speedLabel.text = String.num(value, 0)
+
+
+func _on_actor_turn_speed_slider_value_changed(value: float) -> void:
+	Global.turnSpeed = value
+	turnSpeed = value
+	turnSpeedLabel.text = String.num(value, 2)

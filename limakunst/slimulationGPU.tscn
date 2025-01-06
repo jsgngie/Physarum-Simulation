@@ -28,7 +28,7 @@ shader = ExtResource("3_hxg4p")
 shader_parameter/firstColor = Color(0.407886, 0.744951, 0.786328, 1)
 shader_parameter/secondColor = Color(0.847408, 0.43912, 0.34864, 1)
 shader_parameter/thirdColor = Color(0.211946, 0.397853, 0.157644, 1)
-shader_parameter/maxBrightness = 0.925
+shader_parameter/maxBrightness = 1.0
 shader_parameter/clear = 0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_b4o1a"]
@@ -43,7 +43,7 @@ numActors = 2000000
 numberOfGroups = 3
 sensorDist = 8.0
 sensorAngle = 1.0
-radius = 100
+radius = 20
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 offset_right = 600.0
@@ -186,6 +186,28 @@ text = "1
 "
 horizontal_alignment = 1
 
+[node name="TurnSpeed" type="VBoxContainer" parent="sliderControlContainer"]
+layout_mode = 2
+
+[node name="actorTurnSpeedLabel" type="Label" parent="sliderControlContainer/TurnSpeed"]
+layout_mode = 2
+text = "Turning speed of particles"
+horizontal_alignment = 1
+
+[node name="actorTurnSpeedSlider" type="HSlider" parent="sliderControlContainer/TurnSpeed"]
+layout_mode = 2
+min_value = 0.1
+max_value = 2.0
+step = 0.001
+value = 0.3
+tick_count = 8
+
+[node name="actorTurnSpeedLabelDisplay" type="Label" parent="sliderControlContainer/TurnSpeed"]
+layout_mode = 2
+text = "1
+"
+horizontal_alignment = 1
+
 [node name="Sensor distance" type="VBoxContainer" parent="sliderControlContainer"]
 layout_mode = 2
 
@@ -233,5 +255,6 @@ horizontal_alignment = 1
 [connection signal="color_changed" from="colorButtons/thirdColorPicker" to="." method="_on_third_color_picker_color_changed"]
 [connection signal="value_changed" from="sliderControlContainer/Group/actorGroupSlider" to="." method="_update_groups"]
 [connection signal="value_changed" from="sliderControlContainer/Speed/actorSpeedSlider" to="." method="_on_actor_speed_slider_value_changed"]
+[connection signal="value_changed" from="sliderControlContainer/TurnSpeed/actorTurnSpeedSlider" to="." method="_on_actor_turn_speed_slider_value_changed"]
 [connection signal="value_changed" from="sliderControlContainer/Sensor distance/sensorDistanceSlider" to="." method="_on_sensor_distance_slider_value_changed"]
 [connection signal="value_changed" from="sliderControlContainer/Sensor angle/sensorAngleSlider" to="." method="_on_sensor_angle_slider_value_changed"]
