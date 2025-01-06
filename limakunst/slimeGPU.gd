@@ -8,6 +8,8 @@ extends Node2D
 @export var sensorDist : float = 6
 @export var sensorAngle : float = 0.7
 @export var turnSpeed = 0.3
+@export var debugData : bool = false
+
 var img
 var texture
 var emptyData = []
@@ -217,28 +219,41 @@ func _process(delta: float) -> void:
 		
 	var start = Time.get_ticks_msec()
 	viewPortTex = $SubViewportContainer/SubViewport.get_texture()
-	print("getting texture: " + str(Time.get_ticks_msec() - start))
+	
+	if debugData:
+		print("getting texture: " + str(Time.get_ticks_msec() - start))
+		
 	start = Time.get_ticks_msec()
 	viewPortImg = viewPortTex.get_image()
-	print("getting image: " + str(Time.get_ticks_msec() - start))
-	#viewPortImg.resize(width, height, 0)
-	#print(viewPortImg.get_format())
-	#viewPortImg.convert(Image.FORMAT_RF)
+	
+	if debugData:
+		print("getting image: " + str(Time.get_ticks_msec() - start))
+	
+	
 	start = Time.get_ticks_msec()
 	_process_compute()
-	print("process compute: " + str(Time.get_ticks_msec() - start))
+	if debugData:
+		print("process compute: " + str(Time.get_ticks_msec() - start))
+		
 	start = Time.get_ticks_msec()
 	var trailMapData := rd.texture_get_data(trailMapOutBuffer, 0)
-	print("getting new data: " + str(Time.get_ticks_msec() - start))
+	if debugData:
+		print("getting new data: " + str(Time.get_ticks_msec() - start))
+		
 	start = Time.get_ticks_msec()
 	img = Image.create_from_data(width, height, false, Image.FORMAT_RGBA8, trailMapData)
-	print("getting new image: " + str(Time.get_ticks_msec() - start))
+	if debugData:
+		print("getting new image: " + str(Time.get_ticks_msec() - start))
+		
 	start = Time.get_ticks_msec()
 	_updateBuffers()
-	print("updating buffers: " + str(Time.get_ticks_msec() - start))
+	if debugData:
+		print("updating buffers: " + str(Time.get_ticks_msec() - start))
+		
 	start = Time.get_ticks_msec()
 	tex.update(img)
-	print("updating texture: " + str(Time.get_ticks_msec() - start))
+	if debugData:
+		print("updating texture: " + str(Time.get_ticks_msec() - start))
 	mat.set_shader_parameter("dataTex", tex)
 
 	#$SubViewportContainer/SubViewport/TextureRect.texture = tex
