@@ -40,6 +40,8 @@ var dispatchSize : int
 
 var tempImg : Image
 
+var firstStep = true
+
 @export var radius = 10
 @export var simulate : bool
 
@@ -259,7 +261,11 @@ func _process(delta: float) -> void:
 	if debugData:
 		print("updating texture: " + str(Time.get_ticks_msec() - start))
 	mat.set_shader_parameter("dataTex", tex)
-
+	if firstStep:
+		mat.set_shader_parameter("clear", true)
+		firstStep = false
+	else:
+		mat.set_shader_parameter("clear", false)
 func _process_compute():
 	pipeline = rd.compute_pipeline_create(shader)
 	var compute_list := rd.compute_list_begin()
@@ -281,7 +287,6 @@ func _updateBuffers():
 	paramsUniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
 	paramsUniform.binding = 3
 	paramsUniform.add_id(paramsBuffer)
-	
 	var fmt := RDTextureFormat.new()
 	fmt.width = width
 	fmt.height = height
