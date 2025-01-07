@@ -1,10 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhy7rf5ncnwbr"]
+[gd_scene load_steps=10 format=3 uid="uid://dhy7rf5ncnwbr"]
 
 [ext_resource type="Script" path="res://slimeGPU.gd" id="1_8ughu"]
 [ext_resource type="Shader" path="res://SlimeTest.gdshader" id="2_umkpx"]
 [ext_resource type="Shader" path="res://finalImage.gdshader" id="3_hxg4p"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_7qdp4"]
 
 [sub_resource type="Gradient" id="Gradient_3f2qx"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -18,6 +16,7 @@ shader_parameter/darkColor = Color(0, 0, 0, 1)
 shader_parameter/lightColor = Color(1.82897e-06, 0.736734, 0.586352, 1)
 shader_parameter/dissapation = 0.01
 shader_parameter/maxBrightness = 1.21
+shader_parameter/clear = false
 shader_parameter/dataTex = SubResource("GradientTexture2D_yb5a2")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hwcev"]
@@ -55,12 +54,6 @@ handle_input_locally = false
 size = Vector2i(2560, 1440)
 render_target_clear_mode = 1
 render_target_update_mode = 4
-
-[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("ImageTexture_7qdp4")
 
 [node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport"]
 material = SubResource("ShaderMaterial_fqtlp")

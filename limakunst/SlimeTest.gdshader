@@ -5,7 +5,7 @@ uniform vec3 lightColor : source_color;
 uniform sampler2D dataTex;
 uniform float dissapation = 0.01;
 uniform float maxBrightness = 0.75;
-
+uniform bool clear = false;
 
 void fragment() {
 	vec2 uv = UV;
@@ -27,9 +27,12 @@ void fragment() {
 	avg = avg / 9.0;
 	col = max(avg, oldCol);
 	
-	//col = mix(col, vec3(0.0), dissapation);
 	col = max(col - dissapation, 0.0);
-	COLOR.rgb = col;
+	if (clear == true) {
+		COLOR.rgb = vec3(0.0, 0.0, 0.0);
+	} else {
+		COLOR.rgb = col;
+	}
 }
 
 //void light() {
