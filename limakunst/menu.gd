@@ -7,6 +7,13 @@ extends Control
 @onready var displayed_sensor_angle = $"Controls/LeftSide/Sensor angle/sensorAngleLabelDisplayed"
 @onready var displayed_turnSpeed = $Controls/LeftSide/TurnSpeed/actorTurnSpeedLabelDisplay
 
+var number_of_actors_in_groups = 100
+var number_of_groups = 1
+var speed_of_actors = 1
+var sensorAngle = 0
+var sensorDistance = 1
+var turnSpeed = 0.3
+
 #click backgrounds for focus
 @onready var firstBack = $ColorPickerContainer/VBoxContainer/actorColors/firstBack
 @onready var secondBack = $ColorPickerContainer/VBoxContainer/actorColors/secondBack
@@ -23,7 +30,12 @@ func _on_start_button_pressed():
 	Global.firstColor = firstColor.color
 	Global.secondColor = secondColor.color
 	Global.thirdColor = thirdColor.color
-
+	Global.number_of_actors_in_groups = number_of_actors_in_groups
+	Global.number_of_groups = number_of_groups
+	Global.speed_of_actors = speed_of_actors
+	Global.sensorDistance = sensorDistance
+	Global.sensorAngle = sensorAngle
+	Global.turnSpeed = turnSpeed
 	get_tree().change_scene_to_file("res://slimulationGPU.tscn")
 	
 func _on_quit_button_pressed():
@@ -31,24 +43,24 @@ func _on_quit_button_pressed():
 
 # Updates the value of the slider label, when slider is moved
 func _on_slider_actors_in_groups_value_changed(value):
-	Global.number_of_actors_in_groups = value
+	number_of_actors_in_groups = value
 	displayed_number_of_actors_group.text = String.num(value, 0)
 
 func _on_slider_groups_value_changed(value):
-	Global.number_of_groups = value
+	number_of_groups = value
 	displayed_number_of_groups.text = String.num(value, 0)
 
 func _on_speed_actors_value_changed(value):
-	Global.speed_of_actors = value
+	speed_of_actors = value
 	displayed_speed_of_actors.text = String.num(value, 0)
 	
 	
 func _on_sensor_distance_value_changed(value):
-	Global.sensorDistance = value
+	sensorDistance = value
 	displayed_sensor_distance.text = String.num(value, 0)
 	
 func _on_sensor_angle_value_changed(value):
-	Global.sensorAngle = value
+	sensorAngle = value
 	displayed_sensor_angle.text = String.num(value, 2)
 
 func changeToFocus(back, color):
@@ -85,5 +97,5 @@ func _on_color_picker_color_changed(color):
 
 
 func _on_actor_turn_speed_slider_value_changed(value: float) -> void:
-	Global.turnSpeed = value
+	turnSpeed = value
 	displayed_turnSpeed.text = String.num(value, 2)

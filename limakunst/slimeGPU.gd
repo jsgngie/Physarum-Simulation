@@ -53,7 +53,6 @@ var firstStep = true
 @onready var thirdPicker = $colorButtons/thirdColorPicker
 
 @onready var colorButtons = $colorButtons
-@onready var controlButtons = $controlButtons
 
 @onready var speedLabel = $sliderControlContainer/Speed/actorSpeedLabelDisplay
 @onready var distanceLabel = $"sliderControlContainer/Sensor distance/sensorDistanceLabelDisplayed"
@@ -83,9 +82,9 @@ func assignColors():
 	thirdPicker.color = Global.thirdColor
 
 func updateLabels():
-	angleLabel.text = String.num(actorSpeed, 2)
+	angleLabel.text = String.num(sensorAngle, 2)
 	distanceLabel.text = String.num(sensorDist, 0)
-	speedLabel.text = String.num(sensorAngle, 0)
+	speedLabel.text = String.num(actorSpeed, 0)
 	groupLabel.text = String.num(numberOfGroups, 0)
 	turnSpeedLabel.text = String.num(turnSpeed, 2)
 	
@@ -97,6 +96,9 @@ func updateLabels():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	dissapationShader.set_shader_parameter("clear", false)
+	
 	numActors = Global.number_of_actors_in_groups
 	actorSpeed = Global.speed_of_actors
 	numberOfGroups = Global.number_of_groups;
@@ -207,13 +209,11 @@ func _ready() -> void:
 func hideUI():
 	if isHidden:
 		isHidden = false	
-		controlButtons.visible = true
 		colorButtons.visible = true
 		sliderContainer.visible = true
 		sliderBackground.visible = true
 	else:
 		isHidden = true
-		controlButtons.visible = false
 		colorButtons.visible = false
 		sliderContainer.visible = false
 		sliderBackground.visible = false
@@ -222,6 +222,16 @@ func hideUI():
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("hide_ui"):
 		hideUI()
+	
+	if Input.is_action_just_pressed("main_menu"):
+		dissapationShader.set_shader_parameter("clear", true)
+		get_tree().change_scene_to_file("res://root.tscn")
+		
+	if Input.is_action_just_pressed("restart"):
+		dissapationShader.set_shader_parameter("clear", true)
+		get_tree().reload_current_scene()
+		dissapationShader.set_shader_parameter("clear", false)
+	
 		
 	var start = Time.get_ticks_msec()
 	viewPortTex = $SubViewportContainer/SubViewport.get_texture()
@@ -347,11 +357,6 @@ func _on_second_color_picker_color_changed(color):
 func _on_third_color_picker_color_changed(color):
 	Global.thirdColor = color
 	finalShader.material.set_shader_parameter("thirdColor", color)
-
-func _on_restart_button_pressed():
-	dissapationShader.set_shader_parameter("clear", true)
-	get_tree().reload_current_scene()
-	dissapationShader.set_shader_parameter("clear", false)
 
 func _on_sensor_angle_slider_value_changed(value):
 	Global.sensorAngle = value

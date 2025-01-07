@@ -68,19 +68,6 @@ offset_bottom = 1080.0
 texture = SubResource("ViewportTexture_b4o1a")
 expand_mode = 1
 
-[node name="controlButtons" type="HBoxContainer" parent="."]
-offset_left = 324.0
-offset_top = 35.0
-offset_right = 389.0
-offset_bottom = 85.0
-size_flags_horizontal = 4
-theme_override_constants/separation = 40
-
-[node name="Restart" type="Button" parent="controlButtons"]
-layout_mode = 2
-text = "Restart
-"
-
 [node name="colorButtons" type="HBoxContainer" parent="."]
 offset_left = 36.0
 offset_top = 36.0
@@ -108,7 +95,7 @@ edit_alpha = false
 
 [node name="hideLabel" type="Label" parent="colorButtons"]
 layout_mode = 2
-text = "      H - Hide UI"
+text = "      H - Hide UI, R - Restart, ESC - Main menu"
 
 [node name="sliderControlBackground" type="ColorRect" parent="."]
 offset_left = 15.0
@@ -164,7 +151,7 @@ horizontal_alignment = 1
 [node name="actorSpeedSlider" type="HSlider" parent="sliderControlContainer/Speed"]
 layout_mode = 2
 min_value = 1.0
-max_value = 40.0
+max_value = 8.0
 value = 1.0
 tick_count = 8
 
@@ -187,7 +174,7 @@ layout_mode = 2
 min_value = 0.1
 max_value = 2.0
 step = 0.001
-value = 0.3
+value = 0.1
 tick_count = 8
 
 [node name="actorTurnSpeedLabelDisplay" type="Label" parent="sliderControlContainer/TurnSpeed"]
@@ -237,7 +224,6 @@ layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[connection signal="pressed" from="controlButtons/Restart" to="." method="_on_restart_button_pressed"]
 [connection signal="color_changed" from="colorButtons/firstColorPicker" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="color_changed" from="colorButtons/secondColorPicker" to="." method="_on_second_color_picker_color_changed"]
 [connection signal="color_changed" from="colorButtons/thirdColorPicker" to="." method="_on_third_color_picker_color_changed"]
