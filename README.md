@@ -16,6 +16,7 @@ Alternatively:
 
 5. Download the exe from [here](https://owncloud.ut.ee/owncloud/s/Kp2AFTtLHjfRNrH).
 
+---
 ### Some examples of simulation outputs
 
 ![exampleOne](./readmeAssets/Capture.PNG)
