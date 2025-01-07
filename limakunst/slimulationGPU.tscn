@@ -76,21 +76,16 @@ texture = SubResource("ViewportTexture_b4o1a")
 expand_mode = 1
 
 [node name="controlButtons" type="HBoxContainer" parent="."]
-offset_left = 1726.0
-offset_top = 30.0
-offset_right = 1884.0
-offset_bottom = 80.0
+offset_left = 324.0
+offset_top = 35.0
+offset_right = 389.0
+offset_bottom = 85.0
 size_flags_horizontal = 4
 theme_override_constants/separation = 40
 
 [node name="Restart" type="Button" parent="controlButtons"]
 layout_mode = 2
 text = "Restart
-"
-
-[node name="Button" type="Button" parent="controlButtons"]
-layout_mode = 2
-text = "Back
 "
 
 [node name="colorButtons" type="HBoxContainer" parent="."]
@@ -126,7 +121,7 @@ text = "      H - Hide UI"
 offset_left = 15.0
 offset_top = 103.0
 offset_right = 481.0
-offset_bottom = 234.0
+offset_bottom = 266.0
 scale = Vector2(1.08, 2.52)
 size_flags_vertical = 3
 color = Color(0.231373, 0.231373, 0.231373, 0.529412)

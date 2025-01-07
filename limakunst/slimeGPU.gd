@@ -347,10 +347,6 @@ func _on_third_color_picker_color_changed(color):
 func _on_restart_button_pressed():
 	get_tree().reload_current_scene()
 
-func _on_back_button_pressed():
-	get_owner().queue_free()
-	get_tree().change_scene_to_file("res://root.tscn")
-
 func _on_sensor_angle_slider_value_changed(value):
 	Global.sensorAngle = value
 	sensorAngle = value
