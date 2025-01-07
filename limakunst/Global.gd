@@ -6,6 +6,7 @@ var speed_of_actors = 1
 var sensorAngle = 0
 var sensorDistance = 1
 var turnSpeed = 0.3
+var dissapation = 0.01
 
 var firstColor = Color(1.0, 0.0, 0.0, 1.0)
 var secondColor = Color(0.0, 1.0, 0.0, 1.0)

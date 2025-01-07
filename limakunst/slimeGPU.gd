@@ -8,6 +8,7 @@ extends Node2D
 @export var sensorDist : float = 6
 @export var sensorAngle : float = 0.7
 @export var turnSpeed = 0.3
+@export var dissapation = 0.01
 @export var debugData : bool = false
 
 var img
@@ -32,6 +33,7 @@ var actorsRotBuffer : RID
 var actorsGroupsBuffer : RID
 var trailMapBuffer : RID
 var trailMapOutBuffer : RID
+
 
 var uniform_set : RID
 var pipeline : RID
@@ -59,6 +61,7 @@ var firstStep = true
 @onready var angleLabel = $"sliderControlContainer/Sensor angle/sensorAngleLabelDisplayed"
 @onready var groupLabel = $sliderControlContainer/Group/actorGroupLabelDisplay
 @onready var turnSpeedLabel = $sliderControlContainer/TurnSpeed/actorTurnSpeedLabelDisplay
+@onready var dissapationLabel = $sliderControlContainer/Dissapation/DissapationLabelDisplayed
 
 @onready var sliderContainer = $sliderControlContainer
 @onready var sliderBackground = $sliderControlBackground
@@ -68,6 +71,7 @@ var firstStep = true
 @onready var distanceSlider =$"sliderControlContainer/Sensor distance/sensorDistanceSlider"
 @onready var angleSlider = $"sliderControlContainer/Sensor angle/sensorAngleSlider"
 @onready var turnSpeedSlider = $sliderControlContainer/TurnSpeed/actorTurnSpeedSlider
+@onready var dissapationSlider = $sliderControlContainer/Dissapation/DissapationSlider
 
 var isHidden = false
 
@@ -87,12 +91,14 @@ func updateLabels():
 	speedLabel.text = String.num(actorSpeed, 0)
 	groupLabel.text = String.num(numberOfGroups, 0)
 	turnSpeedLabel.text = String.num(turnSpeed, 2)
+	dissapationLabel.text = String.num(dissapation, 2)
 	
 	speedSlider.value = actorSpeed
 	turnSpeedSlider.value = turnSpeed
 	distanceSlider.value = sensorDist
 	angleSlider.value = sensorAngle
 	groupSlider.value = numberOfGroups
+	dissapationSlider.value = dissapation
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -271,6 +277,7 @@ func _process(delta: float) -> void:
 	if debugData:
 		print("updating texture: " + str(Time.get_ticks_msec() - start))
 	mat.set_shader_parameter("dataTex", tex)
+	mat.set_shader_parameter("dissapation", dissapation)
 	if firstStep:
 		mat.set_shader_parameter("clear", true)
 		firstStep = false
@@ -378,3 +385,9 @@ func _on_actor_turn_speed_slider_value_changed(value: float) -> void:
 	Global.turnSpeed = value
 	turnSpeed = value
 	turnSpeedLabel.text = String.num(value, 2)
+
+
+func _on_dissapation_slider_value_changed(value: float) -> void:
+	Global.dissapation = value
+	dissapation = value
+	dissapationLabel.text = String.num(value, 2)

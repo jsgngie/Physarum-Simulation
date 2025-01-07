@@ -100,8 +100,8 @@ text = "      H - Hide UI, R - Restart, ESC - Main menu"
 [node name="sliderControlBackground" type="ColorRect" parent="."]
 offset_left = 15.0
 offset_top = 103.0
-offset_right = 481.0
-offset_bottom = 266.0
+offset_right = 491.0
+offset_bottom = 302.0
 scale = Vector2(1.08, 2.52)
 size_flags_vertical = 3
 color = Color(0.231373, 0.231373, 0.231373, 0.529412)
@@ -224,6 +224,27 @@ layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
+[node name="Dissapation" type="VBoxContainer" parent="sliderControlContainer"]
+layout_mode = 2
+
+[node name="DissapationLabel" type="Label" parent="sliderControlContainer/Dissapation"]
+layout_mode = 2
+text = "Dissapation speed"
+horizontal_alignment = 1
+
+[node name="DissapationSlider" type="HSlider" parent="sliderControlContainer/Dissapation"]
+layout_mode = 2
+min_value = 0.005
+max_value = 0.1
+step = 0.001
+value = 0.005
+tick_count = 1
+
+[node name="DissapationLabelDisplayed" type="Label" parent="sliderControlContainer/Dissapation"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
 [connection signal="color_changed" from="colorButtons/firstColorPicker" to="." method="_on_color_picker_button_color_changed"]
 [connection signal="color_changed" from="colorButtons/secondColorPicker" to="." method="_on_second_color_picker_color_changed"]
 [connection signal="color_changed" from="colorButtons/thirdColorPicker" to="." method="_on_third_color_picker_color_changed"]
@@ -232,3 +253,4 @@ horizontal_alignment = 1
 [connection signal="value_changed" from="sliderControlContainer/TurnSpeed/actorTurnSpeedSlider" to="." method="_on_actor_turn_speed_slider_value_changed"]
 [connection signal="value_changed" from="sliderControlContainer/Sensor distance/sensorDistanceSlider" to="." method="_on_sensor_distance_slider_value_changed"]
 [connection signal="value_changed" from="sliderControlContainer/Sensor angle/sensorAngleSlider" to="." method="_on_sensor_angle_slider_value_changed"]
+[connection signal="value_changed" from="sliderControlContainer/Dissapation/DissapationSlider" to="." method="_on_dissapation_slider_value_changed"]
