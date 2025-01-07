@@ -9,4 +9,15 @@ The aim of this project is to simulate Physarum polycephalum, using compute shad
 2. Extract the contents to your directory of choosing
 3. Pull the repository
 4. Open the project in Godot, either run to use the program or edit to view the source.
-![How to](./howToRun.PNG)
+
+![How to](.readmeAssets/howToRun.PNG)
+
+Alternatively:
+
+5. Download the exe from [here](https://owncloud.ut.ee/owncloud/s/Kp2AFTtLHjfRNrH).
+
+### Some examples of simulation outputs
+
+![exampleOne](.readmeAssets/capture.PNG)
+
+![exampleTwo](.readmeAssets/capture2.PNG)
