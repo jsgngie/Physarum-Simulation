@@ -54,21 +54,17 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
     float leftWeight = 0.0;
     float rightWeight = 0.0;
 
-    // Extract RGB values as arrays
-    vec3 frontValues = vec3(frontColor.r, frontColor.g, frontColor.b);
-    vec3 rightValues = vec3(rightColor.r, rightColor.g, rightColor.b);
-    vec3 leftValues = vec3(leftColor.r, leftColor.g, leftColor.b);
 
     // Calculate front weight
     for (int i = 0; i < 3; i++) {
         if (i == groupNumber) {
-            frontWeight += frontValues[i];
-            rightWeight += rightValues[i];
-            leftWeight += leftValues[i];
+            frontWeight += frontColor[i];
+            rightWeight += rightColor[i];
+            leftWeight += leftColor[i];
         } else {
-            frontWeight -= 2 * frontValues[i];
-            rightWeight -= 2 * rightValues[i];
-            leftWeight -= 2 * leftValues[i];
+            frontWeight -= 2 * frontColor[i];
+            rightWeight -= 2 * rightColor[i];
+            leftWeight -= 2 * leftColor[i];
         }
     }
 
