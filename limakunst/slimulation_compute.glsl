@@ -63,25 +63,11 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
     for (int i = 0; i < 3; i++) {
         if (i == groupNumber) {
             frontWeight += frontValues[i];
-        } else {
-            frontWeight -= 2 * frontValues[i];
-        }
-    }
-
-    // Calculate right weight
-    for (int i = 0; i < 3; i++) {
-        if (i == groupNumber) {
             rightWeight += rightValues[i];
-        } else {
-            rightWeight -= 2 * rightValues[i];
-        }
-    }
-
-    // Calculate left weight
-    for (int i = 0; i < 3; i++) {
-        if (i == groupNumber) {
             leftWeight += leftValues[i];
         } else {
+            frontWeight -= 2 * frontValues[i];
+            rightWeight -= 2 * rightValues[i];
             leftWeight -= 2 * leftValues[i];
         }
     }
