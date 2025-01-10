@@ -166,8 +166,7 @@ tick_count = 2
 
 [node name="actorTurnSpeedLabelDisplay" type="Label" parent="Controls/LeftSide/TurnSpeed"]
 layout_mode = 2
-text = "1
-"
+text = "0.1"
 horizontal_alignment = 1
 
 [node name="Sensor distance" type="VBoxContainer" parent="Controls/LeftSide"]
@@ -187,8 +186,7 @@ tick_count = 10
 
 [node name="sensorDistanceLabelDisplayed" type="Label" parent="Controls/LeftSide/Sensor distance"]
 layout_mode = 2
-text = "1
-"
+text = "1"
 horizontal_alignment = 1
 
 [node name="Sensor angle" type="VBoxContainer" parent="Controls/LeftSide"]

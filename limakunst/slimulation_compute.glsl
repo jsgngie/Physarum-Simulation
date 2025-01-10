@@ -55,7 +55,7 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
     float rightWeight = 0.0;
 
 
-    // Calculate front weight
+    // Calculate weights
     for (int i = 0; i < 3; i++) {
         if (i == groupNumber) {
             frontWeight += frontColor[i];
@@ -68,6 +68,8 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
         }
     }
 
+
+    //Calculate rotation
     if ((frontWeight < leftWeight) && (frontWeight < rightWeight)) {
        if (rand(rot) < 0.5) {
            rot += params.turnSpeed;
