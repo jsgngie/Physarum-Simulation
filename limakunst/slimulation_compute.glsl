@@ -34,6 +34,10 @@ layout(set = 0, binding = 6, std430) restrict buffer AgentsGroups {
     int data[];
 } agents_groups;
 
+layout(set = 0, binding = 7, std430) restrict buffer GroupParams {
+    vec4 data[];
+} groupParams;
+
 float rand(float n) {
     return fract(sin(n) * 43758.5453123);
 }
@@ -53,7 +57,8 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
     float frontWeight = 0.0;    
     float leftWeight = 0.0;
     float rightWeight = 0.0;
-
+    
+    float turnSpeed = groupParams.data[3][groupNumber];
 
     // Calculate weights
     for (int i = 0; i < 3; i++) {
@@ -72,14 +77,14 @@ float calculateRotation(vec4 frontColor, vec4 leftColor, vec4 rightColor, int gr
     //Calculate rotation
     if ((frontWeight < leftWeight) && (frontWeight < rightWeight)) {
        if (rand(rot) < 0.5) {
-           rot += params.turnSpeed;
+           rot += turnSpeed;
        } else {
-           rot -= params.turnSpeed;
+           rot -= turnSpeed;
        }
     } else if (frontWeight < rightWeight) {
-        rot -= params.turnSpeed;
+        rot -= turnSpeed;
     } else if (frontWeight < leftWeight) {
-        rot += params.turnSpeed;
+        rot += turnSpeed;
     }
 
     return rot;
@@ -100,17 +105,21 @@ void main() {
     vec2 pos = vec2(agents_x.data[gid], agents_y.data[gid]);
     float rot = agents_rot.data[gid];
 
+    float sensorDist = groupParams.data[1][groupNumber];
+    float sensorAngle = groupParams.data[2][groupNumber];
+    float actorSpeed = groupParams.data[0][groupNumber];
+
     vec2 frontSensor = vec2(
-        mod(pos.x + params.sensorDist * cos(rot), width),
-        mod(pos.y + params.sensorDist * sin(rot), height)
+        mod(pos.x + sensorDist * cos(rot), width),
+        mod(pos.y + sensorDist * sin(rot), height)
     );
     vec2 leftSensor = vec2(
-        mod(pos.x + params.sensorDist * cos(rot + params.sensorAngle), width),
-        mod(pos.y + params.sensorDist * sin(rot + params.sensorAngle), height)
+        mod(pos.x + sensorDist * cos(rot + sensorAngle), width),
+        mod(pos.y + sensorDist * sin(rot + sensorAngle), height)
     );
     vec2 rightSensor = vec2(
-        mod(pos.x + params.sensorDist * cos(rot - params.sensorAngle), width),
-        mod(pos.y + params.sensorDist * sin(rot - params.sensorAngle), height)
+        mod(pos.x + sensorDist * cos(rot - sensorAngle), width),
+        mod(pos.y + sensorDist * sin(rot - sensorAngle), height)
     );
     ivec2 frontSensori = ivec2(int(frontSensor.x), int(frontSensor.y));
     ivec2 leftSensori = ivec2(int(leftSensor.x), int(leftSensor.y));
@@ -123,8 +132,8 @@ void main() {
     rot = calculateRotation(frontColor, leftColor, rightColor, groupNumber, rot);
 
     vec2 newPos = vec2(
-        mod(pos.x + params.actorSpeed * cos(rot), width),
-        mod(pos.y + params.actorSpeed * sin(rot), height)
+        mod(pos.x + actorSpeed * cos(rot), width),
+        mod(pos.y + actorSpeed * sin(rot), height)
     );
     ivec2 newPosi = ivec2(int(newPos.x), int(newPos.y));
 

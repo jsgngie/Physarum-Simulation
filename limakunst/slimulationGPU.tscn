@@ -41,7 +41,12 @@ actorSpeed = 3
 numActors = 2000000
 numberOfGroups = 3
 sensorDist = 8.0
-sensorAngle = 1.0
+sensorAngle = 0.345
+turnSpeed = 2.0
+actorSpeeds = Vector3(1, 1, 1)
+sensorAngles = Vector3(1, 1, 1)
+turnSpeeds = Vector3(1, 1, 1)
+relationMult = 2.0
 radius = 20
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -100,8 +105,8 @@ text = "      H - Hide UI, R - Restart, ESC - Main menu"
 [node name="sliderControlBackground" type="ColorRect" parent="."]
 offset_left = 15.0
 offset_top = 103.0
-offset_right = 491.0
-offset_bottom = 302.0
+offset_right = 496.0
+offset_bottom = 357.0
 scale = Vector2(1.08, 2.52)
 size_flags_vertical = 3
 color = Color(0.231373, 0.231373, 0.231373, 0.529412)
@@ -227,12 +232,33 @@ horizontal_alignment = 1
 [node name="Dissapation" type="VBoxContainer" parent="sliderControlContainer"]
 layout_mode = 2
 
-[node name="DissapationLabel" type="Label" parent="sliderControlContainer/Dissapation"]
+[node name="RelationLabel" type="Label" parent="sliderControlContainer/Dissapation"]
+layout_mode = 2
+text = "Property relation"
+horizontal_alignment = 1
+
+[node name="RelationSlider" type="HSlider" parent="sliderControlContainer/Dissapation"]
+layout_mode = 2
+min_value = 1.0
+max_value = 2.0
+step = 0.001
+value = 1.0
+tick_count = 1
+
+[node name="RelationSliderDisplay" type="Label" parent="sliderControlContainer/Dissapation"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="Dissapation2" type="VBoxContainer" parent="sliderControlContainer"]
+layout_mode = 2
+
+[node name="DissapationLabel" type="Label" parent="sliderControlContainer/Dissapation2"]
 layout_mode = 2
 text = "Dissapation speed"
 horizontal_alignment = 1
 
-[node name="DissapationSlider" type="HSlider" parent="sliderControlContainer/Dissapation"]
+[node name="DissapationSlider" type="HSlider" parent="sliderControlContainer/Dissapation2"]
 layout_mode = 2
 min_value = 0.005
 max_value = 0.1
@@ -240,7 +266,7 @@ step = 0.001
 value = 0.005
 tick_count = 1
 
-[node name="DissapationLabelDisplayed" type="Label" parent="sliderControlContainer/Dissapation"]
+[node name="DissapationLabelDisplayed" type="Label" parent="sliderControlContainer/Dissapation2"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
@@ -253,4 +279,5 @@ horizontal_alignment = 1
 [connection signal="value_changed" from="sliderControlContainer/TurnSpeed/actorTurnSpeedSlider" to="." method="_on_actor_turn_speed_slider_value_changed"]
 [connection signal="value_changed" from="sliderControlContainer/Sensor distance/sensorDistanceSlider" to="." method="_on_sensor_distance_slider_value_changed"]
 [connection signal="value_changed" from="sliderControlContainer/Sensor angle/sensorAngleSlider" to="." method="_on_sensor_angle_slider_value_changed"]
-[connection signal="value_changed" from="sliderControlContainer/Dissapation/DissapationSlider" to="." method="_on_dissapation_slider_value_changed"]
+[connection signal="value_changed" from="sliderControlContainer/Dissapation/RelationSlider" to="." method="_on_relation_slider_value_changed"]
+[connection signal="value_changed" from="sliderControlContainer/Dissapation2/DissapationSlider" to="." method="_on_dissapation_slider_value_changed"]
